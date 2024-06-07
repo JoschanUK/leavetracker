@@ -12,6 +12,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 import TableIt
+import time
 from datetime import date
 
 
@@ -151,6 +152,7 @@ def take_leave():
     final_input_list = []
     selected_details = []
     selected_record = []
+    reasons = []
 
     today = date.today()
     today = today.strftime("%d/%m/%Y")
@@ -169,11 +171,58 @@ def take_leave():
     user_input = input(">> " + "\033[0m")
     
     selected_record = selected_details[int(user_input)]
-    final_input_list.append(today)
-    print (selected_record)
-    print (selected_record[0])
-    print (selected_record[2])
+    #print (selected_record)
 
+    """
+    Append retrieved information into new list and write to spreadsheet starting with
+    date, staff number, fname, lname, email, date start, date end, leave taken and reason
+    """
+
+    final_input_list.append(today) #date
+    final_input_list.append(selected_record[0])
+    final_input_list.append(selected_record[2])
+    final_input_list.append(selected_record[3])
+    final_input_list.append(selected_record[4])
+
+    """
+    Get user input on the start date and end date of the annual leave and then calculate the no of days taken
+    """
+    print("\033[92m" + "Please start date [DD/MM/YYYY] :")
+    user_input_start = input(">> " + "\033[0m")
+    final_input_list.append(user_input_start)
+
+    print("\033[92m" + "Please end date [DD/MM/YYYY] :")
+    user_input_end = input(">> " + "\033[0m")
+    final_input_list.append(user_input_end)
+      
+    date_format = "%d/%m/%Y"
+    a = time.mktime(time.strptime(user_input_start, date_format))
+    b = time.mktime(time.strptime(user_input_end, date_format))
+    total_leave = b - a
+    total_leave = int(total_leave / 86400)
+    final_input_list.append(total_leave)
+    #print(final_input_list)
+
+    # Retrieve reasons for taking leave from spreadsheet
+    detail = SHEET.worksheet("reason")
+    reasons = detail.get_all_values()
+    print ("Retrieving data from database ...\n")
+    TableIt.printTable(reasons)
+    
+    # Allow user to select which the leave code
+    print("\033[92m" + "Please select the leave code :")
+    user_input = input(">> " + "\033[0m")
+    reasons = reasons[int(user_input)]
+    final_input_list.append(reasons[1])
+    
+    #Append new leave details to spreadsheet
+    print(f"Updating rew record...\n")
+    worksheet_to_update = SHEET.worksheet("records")
+    worksheet_to_update.append_row(final_input_list)
+    print(f"New leave details updated successfully\n")
+
+
+    print (final_input_list)
 
 def main():
     """
