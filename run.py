@@ -248,6 +248,25 @@ def retrieve_allstaff_details():
     TableIt.printTable(selected_details)
     return selected_details
 
+
+def delete_record():
+    """
+    This is a function to delete the row in the spreadsheet when the staff leave the company
+    """
+    # First to call the retrieve all staff details
+    selected_details = []
+
+    selected_details = retrieve_allstaff_details()
+    
+    # Allow user to select which staff record to delete by enter the staff number
+    print("\033[92m" + "Please select staff number :")
+    user_input_staff = input(">> " + "\033[0m")
+    selected_record = selected_details[int(user_input_staff)]
+    worksheet_to_update = SHEET.worksheet("staff_details")
+    worksheet_to_update.delete_rows(int(user_input_staff)+1)
+    print(f"Record successfully deleted\n")
+
+
 def main():
     """
     Creating a Main function to run all the program functions
@@ -255,10 +274,6 @@ def main():
     """
     option_selected = get_user_selection()
     while option_selected != 00:
-
-        #if int(option_selected) == 00:
-        #print("Exiting Tracking System ...\n")
-
         if int(option_selected) == 1:
             print ("Create New Staff Record ...\n")
             create_new_record()
@@ -280,6 +295,7 @@ def main():
 
         elif int(option_selected) == 5:
             print ("Delete Staff Records ...\n")  
+            delete_record()
             option_selected = get_user_selection()
 
         else :
