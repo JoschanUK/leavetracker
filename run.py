@@ -36,7 +36,7 @@ def get_user_selection():
         print("\033[92m" + "< 1 >" + " - Create New Staff Record")
         print("\033[92m" + "< 2 >" + " - Take Leave")
         print("\033[92m" + "< 3 >" + " - Email Details")
-        print("\033[92m" + "< 4 >" + " - Retrieve Details")
+        print("\033[92m" + "< 4 >" + " - Retrieve All Staff Details")
         print("\033[92m" + "< 5 >" + " - Delete Staff Record")
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
@@ -157,14 +157,9 @@ def take_leave():
     today = date.today()
     today = today.strftime("%d/%m/%Y")
     
-    # Retrieve staff first and last name from spreadsheet
-    detail = SHEET.worksheet("staff_details")
-    staff_list = detail.get_all_values()
-    print ("Retrieving data from database ...\n")
+    # Retrieve all staff details from spreadsheet function
+    selected_details = retrieve_allstaff_details()
     
-    for col_1 in staff_list:
-        selected_details.append(col_1[0:7])
-    TableIt.printTable(selected_details)
 
     # Allow user to select which staff is taking leave by enter the staff number
     print("\033[92m" + "Please select staff number :")
@@ -176,8 +171,8 @@ def take_leave():
     Append retrieved information into new list and write to spreadsheet starting with
     date, staff number, fname, lname, email, date start, date end, leave taken and reason
     """
-    print(selected_record)
-    final_input_list.append(today) #date
+    
+    final_input_list.append(today)
     final_input_list.append(selected_record[0])
     final_input_list.append(selected_record[2])
     final_input_list.append(selected_record[3])
@@ -239,33 +234,60 @@ def update_sickness_record(staff_no, total_sick, no_sick):
     total_sick = int(total_sick) + int(no_sick)
     worksheet_to_update.update_cell(int(staff_no)+1, 7, total_sick)
 
+
+def retrieve_allstaff_details():
+
+    selected_details = []
+    # Retrieve staff details from spreadsheet
+    detail = SHEET.worksheet("staff_details")
+    staff_list = detail.get_all_values()
+    print ("Retrieving data from database ...\n")
+    
+    for col_1 in staff_list:
+        selected_details.append(col_1[0:7])
+    TableIt.printTable(selected_details)
+    return selected_details
+
 def main():
     """
     Creating a Main function to run all the program functions
     1. Get user selection
     """
     option_selected = get_user_selection()
- 
-    if int(option_selected) == 00:
-        print("Exiting Tracking System ...\n")
+    while option_selected != 00:
 
-    elif int(option_selected) == 1:
-        print ("Create New Staff Record ...\n")
-        create_new_record()
+        #if int(option_selected) == 00:
+        #print("Exiting Tracking System ...\n")
+
+        if int(option_selected) == 1:
+            print ("Create New Staff Record ...\n")
+            create_new_record()
+            option_selected = get_user_selection()
     
-    elif int(option_selected) == 2:
-        print ("Take Leave ...\n")
-        take_leave()
+        elif int(option_selected) == 2:
+            print ("Take Leave ...\n")
+            take_leave()
+            option_selected = get_user_selection()
     
-    elif int(option_selected) == 3:
-        print ("Email Details ...\n")
+        elif int(option_selected) == 3:
+            print ("Email Details ...\n")
+            option_selected = get_user_selection()
 
-    elif int(option_selected) == 4:
-        print ("Retrieve Details ...\n")
+        elif int(option_selected) == 4:
+            print ("Retrieve All Staff Details ...\n")
+            retrieve_allstaff_details()
+            option_selected = get_user_selection()
 
-    elif int(option_selected) == 5:
-        print ("Delete Staff Records ...\n")   
+        elif int(option_selected) == 5:
+            print ("Delete Staff Records ...\n")  
+            option_selected = get_user_selection()
 
+        else :
+            print("Exiting Tracking System ...\n")
+            break 
+
+    
+    
     
         
 
