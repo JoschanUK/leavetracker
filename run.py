@@ -163,21 +163,20 @@ def take_leave():
     print ("Retrieving data from database ...\n")
     
     for col_1 in staff_list:
-        selected_details.append(col_1[0:6])
+        selected_details.append(col_1[0:7])
     TableIt.printTable(selected_details)
 
     # Allow user to select which staff is taking leave by enter the staff number
     print("\033[92m" + "Please select staff number :")
-    user_input = input(">> " + "\033[0m")
+    user_input_staff = input(">> " + "\033[0m")
     
-    selected_record = selected_details[int(user_input)]
-    #print (selected_record)
-
+    selected_record = selected_details[int(user_input_staff)]
+    
     """
     Append retrieved information into new list and write to spreadsheet starting with
     date, staff number, fname, lname, email, date start, date end, leave taken and reason
     """
-
+    print(selected_record)
     final_input_list.append(today) #date
     final_input_list.append(selected_record[0])
     final_input_list.append(selected_record[2])
@@ -201,8 +200,7 @@ def take_leave():
     total_leave = b - a
     total_leave = int(total_leave / 86400)
     final_input_list.append(total_leave)
-    #print(final_input_list)
-
+    
     # Retrieve reasons for taking leave from spreadsheet
     detail = SHEET.worksheet("reason")
     reasons = detail.get_all_values()
@@ -212,6 +210,14 @@ def take_leave():
     # Allow user to select which the leave code
     print("\033[92m" + "Please select the leave code :")
     user_input = input(">> " + "\033[0m")
+    """
+    if user select 1 which is holiday or time off, the system will deduct the no of leave and update the staff details
+    """
+    if int(user_input) == 1:
+        update_holidays_record(user_input_staff, selected_record[5],total_leave)
+    elif int(user_input) == 2:
+        update_sickness_record(user_input_staff, selected_record[6],total_leave)
+
     reasons = reasons[int(user_input)]
     final_input_list.append(reasons[1])
     
@@ -221,8 +227,17 @@ def take_leave():
     worksheet_to_update.append_row(final_input_list)
     print(f"New leave details updated successfully\n")
 
+def update_holidays_record(staff_no, total_annual, total_leave):
+    
+    worksheet_to_update = SHEET.worksheet("staff_details")
+    total_annual = int(total_annual) - int(total_leave)
+    worksheet_to_update.update_cell(int(staff_no)+1, 6, total_annual)
 
-    print (final_input_list)
+def update_sickness_record(staff_no, total_sick, no_sick):
+
+    worksheet_to_update = SHEET.worksheet("staff_details")
+    total_sick = int(total_sick) + int(no_sick)
+    worksheet_to_update.update_cell(int(staff_no)+1, 7, total_sick)
 
 def main():
     """
