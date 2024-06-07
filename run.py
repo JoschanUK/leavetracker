@@ -11,7 +11,10 @@ https://docs.google.com/spreadsheets/d/1C379qhO_6zp1L4n5kI8mIFIw0OEbyhBfbOJqzV9F
 import gspread
 from google.oauth2.service_account import Credentials
 import os
-import datetime
+import TableIt
+from datetime import date
+
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -79,7 +82,7 @@ def create_new_record():
     while True:
         # Get user input for staff grade
         print("\033[92m" + f"Enter staff grade {grade_list[1:5]}")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         user_input = user_input.upper()
         
         """
@@ -97,15 +100,15 @@ def create_new_record():
 
         # Get user input for first name, last name, email
         print("\033[92m" + "Enter staff first name")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
 
         print("\033[92m" + "Enter staff last name")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
 
         print("\033[92m" + "Enter staff email address")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
 
         # Add annual leave to new list
@@ -138,6 +141,40 @@ def get_grade_total_leave(user_input):
     
     return False
 
+def take_leave():
+    """
+    When user input to take leave. The system will retrieve the staff names from the spreadsheet and then ask user to 
+    select the staff who wants to take leave. The system will also ask for the start and end date and the reason for 
+    taking this leave
+    """
+    
+    final_input_list = []
+    selected_details = []
+    selected_record = []
+
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")
+    
+    # Retrieve staff first and last name from spreadsheet
+    detail = SHEET.worksheet("staff_details")
+    staff_list = detail.get_all_values()
+    print ("Retrieving data from database ...\n")
+    
+    for col_1 in staff_list:
+        selected_details.append(col_1[0:6])
+    TableIt.printTable(selected_details)
+
+    # Allow user to select which staff is taking leave by enter the staff number
+    print("\033[92m" + "Please select staff number :")
+    user_input = input(">> " + "\033[0m")
+    
+    selected_record = selected_details[int(user_input)]
+    final_input_list.append(today)
+    print (selected_record)
+    print (selected_record[0])
+    print (selected_record[2])
+
+
 def main():
     """
     Creating a Main function to run all the program functions
@@ -146,28 +183,33 @@ def main():
     option_selected = get_user_selection()
  
     if int(option_selected) == 00:
-        print("Exiting Tracking System ...")
+        print("Exiting Tracking System ...\n")
 
     elif int(option_selected) == 1:
-        print ("Create New Staff Record ...")
+        print ("Create New Staff Record ...\n")
         create_new_record()
     
     elif int(option_selected) == 2:
-        print ("Take Leave ...")
+        print ("Take Leave ...\n")
         take_leave()
     
     elif int(option_selected) == 3:
-        print ("Email Details ...")
+        print ("Email Details ...\n")
 
     elif int(option_selected) == 4:
-        print ("Retrieve Details ...")
+        print ("Retrieve Details ...\n")
 
     elif int(option_selected) == 5:
-        print ("Delete Staff Records ...")   
+        print ("Delete Staff Records ...\n")   
 
     
         
 
+print("\033[1m" + "Welcome to Leave Tracking System \n" + "\033[0m")
+print("\033[1m" + "System Version 1.0\n" + "\033[0m")
+print("\033[1m" + "**Unauthorised use is strictly prohibited**\n\n" + "\033[0m")
 
-print("\033[1m" + "Welcome to Leave Tracking System 1.0\n\n" + "\033[0m")
+today = date.today()
+today = today.strftime("%d/%m/%Y")
+print(f"Today date is {today}.\n\n")
 main()
