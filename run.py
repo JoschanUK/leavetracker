@@ -1,6 +1,13 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+
+#Spreadsheet weblink
+"""
+https://docs.google.com/spreadsheets/d/1C379qhO_6zp1L4n5kI8mIFIw0OEbyhBfbOJqzV9FH-0/edit?pli=1#gid=1106879757
+"""
+
+
 import gspread
 from google.oauth2.service_account import Credentials
 import os
@@ -34,7 +41,7 @@ def get_user_selection():
         print("\033[92m" + "< 5 >" + " - Delete Staff Record")
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
-        user_input = input(">> ")
+        user_input = input(">> " + "\033[0m")
         if validate_data(sys_values, user_input):
             print ("Entry is correct ...")
             break
@@ -66,10 +73,48 @@ def create_new_record():
     """
     Call a function to get the next staff number from the spreadsheet
     """
+    # Get new staff number from the spreadsheet and append it to the new list
     last_staff_number = get_new_staff_number()
     new_staff_number = int(last_staff_number) + 1
     new_list.append(int(new_staff_number))
+    while True:
+        # Get user input for staff grade
+        print("\033[92m" + "Enter staff grade [A, B, C, D]")
+        user_input = input(">> " + "\033[0m")
+        user_input = user_input.upper()
+
+    # Retrieve grade and total leave from spreadsheet and validate that the user entry is correct and return the total 
+    # number of annual leave the staff is entitled
+        annual_leave = get_grade_total_leave(user_input)
+        print(annual_leave)
+
+        if annual_leave != False:
+            break
+
+    new_list.append(user_input)
+
+    # Get user input for first name, last name, email
+    print("\033[92m" + "Enter staff first name")
+    user_input = input(">> " + "\033[0m")
+    new_list.append(user_input)
+
+    print("\033[92m" + "Enter staff last name")
+    user_input = input(">> " + "\033[0m")
+    new_list.append(user_input)
+
+    print("\033[92m" + "Enter staff email address")
+    user_input = input(">> " + "\033[0m")
+    new_list.append(user_input)
+
+    # Add annual leave to new list
+    new_list.append(annual_leave)
     print (new_list)
+
+    #Append new staff details to spreadsheet
+    print(f"Updating rew record...\n")
+    worksheet_to_update = SHEET.worksheet("staff_details")
+    worksheet_to_update.append_row(new_list)
+    print(f"New staff details updated successfully\n")
 
 def get_new_staff_number():
 
@@ -80,6 +125,16 @@ def get_new_staff_number():
     new_staff_number = detail.col_values(1)
     return new_staff_number[-1]
 
+def get_grade_total_leave(user_input):
+
+    detail = SHEET.worksheet("grade")
+    grade_leave = detail.get_all_values()
+
+    for col_1, col_2 in grade_leave:
+        if str(user_input) == str(col_1):
+            return col_2
+    
+    return False
 
 def main():
     """
