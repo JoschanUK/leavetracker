@@ -68,6 +68,7 @@ def create_new_record():
     tab of the spreasheet
     """
     new_list = []
+    grade_list = []
     
 
     """
@@ -77,9 +78,14 @@ def create_new_record():
     last_staff_number = get_new_staff_number()
     new_staff_number = int(last_staff_number) + 1
     new_list.append(int(new_staff_number))
+
+    # Retrieve staff grade from spreadsheet
+    detail = SHEET.worksheet("grade")
+    grade_list = detail.col_values(1)
+
     while True:
         # Get user input for staff grade
-        print("\033[92m" + "Enter staff grade [A, B, C, D]")
+        print("\033[92m" + f"Enter staff grade {grade_list[1:5]}")
         user_input = input(">> " + "\033[0m")
         user_input = user_input.upper()
 
@@ -108,8 +114,7 @@ def create_new_record():
 
     # Add annual leave to new list
     new_list.append(annual_leave)
-    print (new_list)
-
+    
     #Append new staff details to spreadsheet
     print(f"Updating rew record...\n")
     worksheet_to_update = SHEET.worksheet("staff_details")
