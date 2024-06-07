@@ -29,7 +29,7 @@ SHEET = GSPREAD_CLIENT.open('annual_leave')
 
 def get_user_selection():
 
-    sys_values = ["1", "2", "3", "4", "5", "00"]
+    sys_values = ["1", "2", "3", "4", "5", "6", "00"]
 
     while True:
         print("\033[92m" + f"Please select one of the following {sys_values} : \n")
@@ -38,6 +38,7 @@ def get_user_selection():
         print("\033[92m" + "< 3 >" + " - Email Details")
         print("\033[92m" + "< 4 >" + " - Retrieve All Staff Details")
         print("\033[92m" + "< 5 >" + " - Delete Staff Record")
+        print("\033[92m" + "< 6 >" + " - Clear Screen")
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
         user_input = input(">> " + "\033[0m")
@@ -246,6 +247,7 @@ def retrieve_allstaff_details():
     for col_1 in staff_list:
         selected_details.append(col_1[0:7])
     TableIt.printTable(selected_details)
+    print("\n")
     return selected_details
 
 
@@ -298,6 +300,11 @@ def main():
             delete_record()
             option_selected = get_user_selection()
 
+        elif int(option_selected) == 6:
+            print ("Clearing Screen ...\n")  
+            os.system('clear')
+            option_selected = get_user_selection()
+        
         else :
             print("Exiting Tracking System ...\n")
             break 
