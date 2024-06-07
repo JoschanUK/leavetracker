@@ -11,6 +11,7 @@ https://docs.google.com/spreadsheets/d/1C379qhO_6zp1L4n5kI8mIFIw0OEbyhBfbOJqzV9F
 import gspread
 from google.oauth2.service_account import Credentials
 import os
+import datetime
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -21,12 +22,6 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('annual_leave')
-
-#sales = SHEET.worksheet('grade')
-
-#data = sales.get_all_values()
-
-#print(data)
 
 def get_user_selection():
 
@@ -43,10 +38,8 @@ def get_user_selection():
 
         user_input = input(">> " + "\033[0m")
         if validate_data(sys_values, user_input):
-            print ("Entry is correct ...")
             break
         else:
-            print ("Wrong!")
             os.system('clear')
     return user_input
     
@@ -88,38 +81,42 @@ def create_new_record():
         print("\033[92m" + f"Enter staff grade {grade_list[1:5]}")
         user_input = input(">> " + "\033[0m")
         user_input = user_input.upper()
-
-    # Retrieve grade and total leave from spreadsheet and validate that the user entry is correct and return the total 
-    # number of annual leave the staff is entitled
+        
+        """
+        Retrieve grade and total leave from spreadsheet and validate that the user entry is correct and return the total 
+        number of annual leave the staff is entitled.
+        """
+        
         annual_leave = get_grade_total_leave(user_input)
         print(annual_leave)
 
-        if annual_leave != False:
+        if annual_leave == False:
             break
 
-    new_list.append(user_input)
+        new_list.append(user_input)
 
-    # Get user input for first name, last name, email
-    print("\033[92m" + "Enter staff first name")
-    user_input = input(">> " + "\033[0m")
-    new_list.append(user_input)
+        # Get user input for first name, last name, email
+        print("\033[92m" + "Enter staff first name")
+        user_input = input(">> " + "\033[0m")
+        new_list.append(user_input)
 
-    print("\033[92m" + "Enter staff last name")
-    user_input = input(">> " + "\033[0m")
-    new_list.append(user_input)
+        print("\033[92m" + "Enter staff last name")
+        user_input = input(">> " + "\033[0m")
+        new_list.append(user_input)
 
-    print("\033[92m" + "Enter staff email address")
-    user_input = input(">> " + "\033[0m")
-    new_list.append(user_input)
+        print("\033[92m" + "Enter staff email address")
+        user_input = input(">> " + "\033[0m")
+        new_list.append(user_input)
 
-    # Add annual leave to new list
-    new_list.append(annual_leave)
+        # Add annual leave to new list
+        new_list.append(annual_leave)
     
-    #Append new staff details to spreadsheet
-    print(f"Updating rew record...\n")
-    worksheet_to_update = SHEET.worksheet("staff_details")
-    worksheet_to_update.append_row(new_list)
-    print(f"New staff details updated successfully\n")
+        #Append new staff details to spreadsheet
+        print(f"Updating rew record...\n")
+        worksheet_to_update = SHEET.worksheet("staff_details")
+        worksheet_to_update.append_row(new_list)
+        print(f"New staff details updated successfully\n")
+        break
 
 def get_new_staff_number():
 
@@ -147,14 +144,29 @@ def main():
     1. Get user selection
     """
     option_selected = get_user_selection()
-    
+ 
     if int(option_selected) == 00:
         print("Exiting Tracking System ...")
-    
+
     elif int(option_selected) == 1:
-        print ("Create New Staff Record")
+        print ("Create New Staff Record ...")
         create_new_record()
     
+    elif int(option_selected) == 2:
+        print ("Take Leave ...")
+        take_leave()
+    
+    elif int(option_selected) == 3:
+        print ("Email Details ...")
+
+    elif int(option_selected) == 4:
+        print ("Retrieve Details ...")
+
+    elif int(option_selected) == 5:
+        print ("Delete Staff Records ...")   
+
+    
+        
 
 
 print("\033[1m" + "Welcome to Leave Tracking System 1.0\n\n" + "\033[0m")
