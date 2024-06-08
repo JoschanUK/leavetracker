@@ -11,9 +11,10 @@ https://docs.google.com/spreadsheets/d/1C379qhO_6zp1L4n5kI8mIFIw0OEbyhBfbOJqzV9F
 import gspread
 from google.oauth2.service_account import Credentials
 import os
-import TableIt
+import TableIt #To create the table in the terminal
 import time
-from datetime import date
+import yagmail #To send emails out
+from datetime import date 
 
 
 SCOPE = [
@@ -268,6 +269,26 @@ def delete_record():
     worksheet_to_update.delete_rows(int(user_input_staff)+1)
     print(f"Record successfully deleted\n")
 
+def send_email():
+    
+    # First to call the retrieve all staff details
+    selected_details = []
+
+    selected_details = retrieve_allstaff_details()
+    
+    # Allow user to select which staff to send the email to by enter the staff number
+    print("\033[92m" + "Please select staff number to email the staff :")
+    user_input_staff = input(">> " + "\033[0m")
+    selected_record = selected_details[int(user_input_staff)]
+    print(selected_record)
+    contents = ["Dear {selected_record[2]}" + "\n\n Please see your lastest leave allocation.\n\n Annual Leave left : {selected_record[5]}" + "\n Total Sick Leave Taken : {selected_record[6]}" + "\n\n}"]
+    print(contents)
+
+    yag = yagmail.SMTP('jctest018', 'apple_test2468')
+    contents = ["Dear {selected_record[2]}\n\n Please see your lastest leave allocation.\n\n Annual Leave left : {selected_record[5]} \n Total Sick Leave Taken : {selected_record[6]\n\n}"]
+    yag.send('jctest018@gmail.com', 'Leave Update', contents)
+
+
 
 def main():
     """
@@ -288,6 +309,7 @@ def main():
     
         elif int(option_selected) == 3:
             print ("Email Details ...\n")
+            send_email()
             option_selected = get_user_selection()
 
         elif int(option_selected) == 4:
