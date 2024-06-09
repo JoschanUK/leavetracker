@@ -141,6 +141,7 @@ def create_new_record():
 
         # Add annual leave to new list
         new_list.append(annual_leave)
+        new_list.append(0)
     
         #Append new staff details to spreadsheet
         print(f"Updating rew record...\n")
@@ -182,6 +183,7 @@ def take_leave():
     reasons = []
 
    # global user_input_staff
+    global user_input
 
     today = date.today()
     today = today.strftime("%d/%m/%Y")
@@ -195,7 +197,7 @@ def take_leave():
         user_input_staff = int(input(">> " + "\033[0m"))
     except ValueError:
         print("Invalid input. Please enter a valid integer.")
-        #take_leave()
+        take_leave()
         
     """
     Check how many staff are in the database. This number will be compare with the user input in case the user enter a wrong number.
@@ -244,23 +246,33 @@ def take_leave():
     
     # Allow user to select which the leave code
     print("\033[92m" + "Please select the leave code :")
-    user_input = input(">> " + "\033[0m")
+  #  user_input = input(">> " + "\033[0m")
+
+    try:
+        user_input = int(input(">> " + "\033[0m"))
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+        print("Please select staff number again.")
+        take_leave()
+
     """
     if user select 1 which is holiday or time off, the system will deduct the no of leave and update the staff details
     """
-    if int(user_input) == 1:
-        update_holidays_record(user_input_staff, selected_record[5],total_leave)
-    elif int(user_input) == 2:
-        update_sickness_record(user_input_staff, selected_record[6],total_leave)
-
-    reasons = reasons[int(user_input)]
-    final_input_list.append(reasons[1])
+    while int(user_input)<= 4:
+        if int(user_input) == 1:
+            update_holidays_record(user_input_staff, selected_record[5],total_leave)
+        elif int(user_input) == 2:
+            update_sickness_record(user_input_staff, selected_record[6],total_leave)
     
-    #Append new leave details to spreadsheet
-    print(f"Updating rew record...\n")
-    worksheet_to_update = SHEET.worksheet("records")
-    worksheet_to_update.append_row(final_input_list)
-    print(f"New leave details updated successfully\n")
+        reasons = reasons[int(user_input)]
+        final_input_list.append(reasons[1])
+    
+        #Append new leave details to spreadsheet
+        print(f"Updating rew record...\n")
+        worksheet_to_update = SHEET.worksheet("records")
+        worksheet_to_update.append_row(final_input_list)
+        print(f"New leave details updated successfully\n")
+        break
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     
@@ -301,12 +313,16 @@ def delete_record():
     
     # Allow user to select which staff record to delete by enter the staff number
     print("\033[92m" + "Please select staff number :")
-    user_input_staff = input(">> " + "\033[0m")
+    try:
+        user_input_staff = int(input(">> " + "\033[0m"))
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+        delete_record()
+
 
     # Retrieve the total number of staffs in the database
     total_staff = get_new_staff_number()
-
-    if int(total_staff) <= 1:
+    if int(total_staff) >= user_input_staff:
         selected_record = selected_details[int(user_input_staff)]
         worksheet_to_update = SHEET.worksheet("staff_details")
         worksheet_to_update.delete_rows(int(user_input_staff)+1)
