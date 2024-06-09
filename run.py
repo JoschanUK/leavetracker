@@ -317,28 +317,30 @@ def delete_record():
     """
     # First to call the retrieve all staff details
     selected_details = []
-
     selected_details = retrieve_allstaff_details()
+    while True:
+
+        # Allow user to select which staff record to delete by enter the staff number
+        print("\033[92m" + "Please select staff number :")
+        try:
+            user_input_staff = int(input(">> " + "\033[0m"))
+            # Retrieve the total number of staffs in the database
+            total_staff = get_new_staff_number()
+            if int(total_staff) >= user_input_staff:
+                selected_record = selected_details[int(user_input_staff)]
+                worksheet_to_update = SHEET.worksheet("staff_details")
+                worksheet_to_update.delete_rows(int(user_input_staff)+1)
+                print(f"Record successfully deleted\n")
+                break
+            else:
+                print("Invalid input: Please enter correct staff number.")
+
+        except ValueError:
+            print("Invalid input: Please enter a valid integer.")
+        
+
+
     
-    # Allow user to select which staff record to delete by enter the staff number
-    print("\033[92m" + "Please select staff number :")
-    try:
-        user_input_staff = int(input(">> " + "\033[0m"))
-    except ValueError:
-        print("Invalid input. Please enter a valid integer.")
-        delete_record()
-
-
-    # Retrieve the total number of staffs in the database
-    total_staff = get_new_staff_number()
-    if int(total_staff) >= user_input_staff:
-        selected_record = selected_details[int(user_input_staff)]
-        worksheet_to_update = SHEET.worksheet("staff_details")
-        worksheet_to_update.delete_rows(int(user_input_staff)+1)
-        print(f"Record successfully deleted\n")
-    else:
-        print("Error : Please enter correct staff number.")
-        delete_record()
 
 def send_email():
     
