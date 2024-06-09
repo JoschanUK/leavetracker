@@ -13,9 +13,10 @@ from google.oauth2.service_account import Credentials
 import os
 import TableIt #To create the table in the terminal
 import time
-import yagmail #To send emails out
+import smtplib #To send emails out
 from datetime import date 
 
+#smtpObj = smtplib.SMTP( [live.smtp.mailtrap.io [587]] )
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -280,14 +281,24 @@ def send_email():
     print("\033[92m" + "Please select staff number to email the staff :")
     user_input_staff = input(">> " + "\033[0m")
     selected_record = selected_details[int(user_input_staff)]
-    print(selected_record)
-    contents = ["Dear {selected_record[2]}" + "\n\n Please see your lastest leave allocation.\n\n Annual Leave left : {selected_record[5]}" + "\n Total Sick Leave Taken : {selected_record[6]}" + "\n\n}"]
-    print(contents)
+    
 
-    yag = yagmail.SMTP('jctest018', 'apple_test2468')
-    contents = ["Dear {selected_record[2]}\n\n Please see your lastest leave allocation.\n\n Annual Leave left : {selected_record[5]} \n Total Sick Leave Taken : {selected_record[6]\n\n}"]
-    yag.send('jctest018@gmail.com', 'Leave Update', contents)
+    sender = "Private Person <mailtrap@leavetracker.com>"
+    receiver = "A Test User <jctest018@gmail.com>"
 
+    message = f"""\
+    Subject: Hi Mailtrap
+    To: {receiver}
+    From: {sender}
+
+    This is a test e-mail message."""
+
+    with smtplib.SMTP("live.smtp.mailtrap.io", 587) as server:
+        server.starttls()
+        server.login("api", "304db84d02f75d57cfc7dd73632fa378")
+        server.sendmail(sender, receiver, message)
+    
+    print("Email sent")
 
 
 def main():
