@@ -251,29 +251,31 @@ def take_leave():
     try:
         user_input = int(input(">> " + "\033[0m"))
     except ValueError:
-        print("Invalid input. Please enter a valid integer.")
+        print("Error : Please enter correct staff number.")
         print("Please select staff number again.")
         take_leave()
 
     """
     if user select 1 which is holiday or time off, the system will deduct the no of leave and update the staff details
     """
-    while int(user_input)<= 4:
-        if int(user_input) == 1:
-            update_holidays_record(user_input_staff, selected_record[5],total_leave)
-        elif int(user_input) == 2:
-            update_sickness_record(user_input_staff, selected_record[6],total_leave)
-    
-        reasons = reasons[int(user_input)]
-        final_input_list.append(reasons[1])
-    
-        #Append new leave details to spreadsheet
-        print(f"Updating rew record...\n")
-        worksheet_to_update = SHEET.worksheet("records")
-        worksheet_to_update.append_row(final_input_list)
-        print(f"New leave details updated successfully\n")
-        break
+    if int(user_input) == 1:
+        update_holidays_record(user_input_staff, selected_record[5],total_leave)
+    elif int(user_input) == 2:
+        update_sickness_record(user_input_staff, selected_record[6],total_leave)
+    elif int(user_input) > 4:
 
+        print("Please select staff number again.")
+        take_leave()
+
+    reasons = reasons[int(user_input)]
+    final_input_list.append(reasons[1])
+    
+    #Append new leave details to spreadsheet
+    print(f"Updating rew record...\n")
+    worksheet_to_update = SHEET.worksheet("records")
+    worksheet_to_update.append_row(final_input_list)
+    print(f"New leave details updated successfully\n")
+        
 def update_holidays_record(staff_no, total_annual, total_leave):
     
     worksheet_to_update = SHEET.worksheet("staff_details")
@@ -308,6 +310,7 @@ def delete_record():
     """
     # First to call the retrieve all staff details
     selected_details = []
+    global user_input_staff  
 
     selected_details = retrieve_allstaff_details()
     
@@ -319,17 +322,17 @@ def delete_record():
         print("Invalid input. Please enter a valid integer.")
         delete_record()
 
-
     # Retrieve the total number of staffs in the database
     total_staff = get_new_staff_number()
-    if int(total_staff) >= user_input_staff:
+    while int(total_staff)>= user_input_staff:
+    #if int(total_staff) >= user_input_staff:
         selected_record = selected_details[int(user_input_staff)]
         worksheet_to_update = SHEET.worksheet("staff_details")
         worksheet_to_update.delete_rows(int(user_input_staff)+1)
         print(f"Record successfully deleted\n")
     else:
         print("Error : Please enter correct staff number.")
-        delete_record()
+        #delete_record()
 
 def send_email():
     
