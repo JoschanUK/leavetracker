@@ -147,6 +147,8 @@ def create_new_record():
         worksheet_to_update = SHEET.worksheet("staff_details")
         worksheet_to_update.append_row(new_list)
         print(f"New staff details updated successfully\n")
+        print("Press Enter to continue...")
+        input("\033[92m" + ">> " + "\033[0m")
         break
     
 def get_new_staff_number():
@@ -273,6 +275,8 @@ def take_leave():
                 worksheet_to_update = SHEET.worksheet("records")
                 worksheet_to_update.append_row(final_input_list)
                 print(f"New leave details updated successfully\n")
+                print("Press Enter to continue...")
+                input("\033[92m" + ">> " + "\033[0m")
                 break
             else:
                 print("Invalid input : Please enter correct leave code.\n")  
@@ -304,6 +308,8 @@ def retrieve_allstaff_details():
         selected_details.append(col_1[0:7])
     TableIt.printTable(selected_details)
     print("\n")
+    print("Press Enter to continue...")
+    input("\033[92m" + ">> " + "\033[0m")
     return selected_details
 
 def display_leave_record():
@@ -346,6 +352,8 @@ def display_leave_record():
 
                 TableIt.printTable(selected_leave_details)
                 print("\n")
+                print("Press Enter to continue...")
+                input("\033[92m" + ">> " + "\033[0m")
                 break
             
             else:
@@ -373,6 +381,8 @@ def delete_record():
                 worksheet_to_update = SHEET.worksheet("staff_details")
                 worksheet_to_update.delete_rows(int(user_input_staff)+1)
                 print(f"Record successfully deleted\n")
+                print("Press Enter to continue...")
+                input("\033[92m" + ">> " + "\033[0m")
                 break
             else:
                 print("Invalid input: Please enter correct staff number.\n")
@@ -409,6 +419,8 @@ def send_email():
         server.sendmail(sender, receiver, message)
     
     print("Email sent")
+    print("Press Enter to continue...")
+    input("\033[92m" + ">> " + "\033[0m")
 
 
 def main():
