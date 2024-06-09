@@ -47,7 +47,7 @@ def get_user_selection():
         try:
             user_input = int(input(">> " + "\033[0m"))
         except ValueError:
-            print("Invalid input. Please enter a valid integer.")
+            print("Invalid input : Please enter a valid integer.")
             get_user_selection()
         
         if validate_data_int(sys_values, user_input):
@@ -115,14 +115,12 @@ def create_new_record():
         result = validate_data_str(grade_list, user_input)
         if result == True:
             annual_leave = get_grade_total_leave(user_input)
-            print(annual_leave)
-
             if annual_leave == False:
                 break
 
             new_list.append(user_input)
         else:
-            print("Error : Please enter correct grade.")
+            print("Invalid input : Please enter correct grade.")
             create_new_record()
             break
 
@@ -338,10 +336,6 @@ def delete_record():
         except ValueError:
             print("Invalid input: Please enter a valid integer.")
         
-
-
-    
-
 def send_email():
     
     # First to call the retrieve all staff details
