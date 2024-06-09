@@ -32,6 +32,7 @@ SHEET = GSPREAD_CLIENT.open('annual_leave')
 def get_user_selection():
 
     sys_values = ["1", "2", "3", "4", "5", "6", "00"]
+    global user_input
 
     while True:
         print("\033[92m" + f"Please select one of the following {sys_values} : \n")
@@ -43,7 +44,12 @@ def get_user_selection():
         print("\033[92m" + "< 6 >" + " - Clear Screen")
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
-        user_input = input(">> " + "\033[0m")
+        try:
+            user_input = int(input(">> " + "\033[0m"))
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+            get_user_selection()
+        
         if validate_data_int(sys_values, user_input):
             break
         else:
@@ -175,23 +181,28 @@ def take_leave():
     selected_record = []
     reasons = []
 
+   # global user_input_staff
+
     today = date.today()
     today = today.strftime("%d/%m/%Y")
     
     # Retrieve all staff details from spreadsheet function
     selected_details = retrieve_allstaff_details()
     
-
     # Allow user to select which staff is taking leave by enter the staff number
     print("\033[92m" + "Please select staff number :")
-    user_input_staff = input(">> " + "\033[0m")
+    try:
+        user_input_staff = int(input(">> " + "\033[0m"))
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
+        #take_leave()
         
     """
     Check how many staff are in the database. This number will be compare with the user input in case the user enter a wrong number.
     """
     total_staff = get_new_staff_number()
 
-    if int(total_staff) <= 1:
+    if int(total_staff) >= user_input_staff:
 
         selected_record = selected_details[int(user_input_staff)]
         """
