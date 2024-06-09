@@ -15,6 +15,8 @@ import TableIt #To create the table in the terminal
 import time
 import smtplib #To send emails out
 from datetime import date 
+from datetime import datetime
+import pandas as pd
 
 #smtpObj = smtplib.SMTP( [live.smtp.mailtrap.io [587]] )
 
@@ -218,7 +220,6 @@ def take_leave():
                 final_input_list.append(selected_record[2])
                 final_input_list.append(selected_record[3])
                 final_input_list.append(selected_record[4])
-                print(final_input_list)
                 break
             
             else:
@@ -229,14 +230,30 @@ def take_leave():
     """
     Get user input on the start date and end date of the annual leave and then calculate the no of days taken
     """
-    print("\033[92m" + "Please start date [DD/MM/YYYY] :")
-    user_input_start = input(">> " + "\033[0m")
-    final_input_list.append(user_input_start)
+    while True:
+        try:
+            print("\033[92m" + "Please enter a start date [DD/MM/YYYY] :")
+            user_input_start = input(">> " + "\033[0m")
+            user_input_start = datetime.strptime(user_input_start, '%d/%m/%Y')
+            final_input_list.append(user_input_start)
+            user_input_start = remove_time(user_input_start)
+            print(user_input_start)
+            break
+        except ValueError:
+            print("Invalid input: Please enter a valid start date.\n")
+    
+    while True:
+        try:
+            print("\033[92m" + "Please enter end date [DD/MM/YYYY] :")
+            user_input_end = input(">> " + "\033[0m")
+            user_input_end = datetime.strptime(user_input_end, '%d/%m/%Y')
+            final_input_list.append(user_input_end)
+            user_input_end = remove_time(user_input_end)
+            print(user_input_end)
+            break
+        except ValueError:
+            print("Invalid input: Please enter a valid end date.\n")
 
-    print("\033[92m" + "Please end date [DD/MM/YYYY] :")
-    user_input_end = input(">> " + "\033[0m")
-    final_input_list.append(user_input_end)
-      
     date_format = "%d/%m/%Y"
     a = time.mktime(time.strptime(user_input_start, date_format))
     b = time.mktime(time.strptime(user_input_end, date_format))
@@ -283,6 +300,18 @@ def take_leave():
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
 
+def remove_time(date_time_var):
+
+    # Convert to Pandas datetime object
+    date_time_obj = pd.to_datetime(date_time_var)
+
+    # Remove time from the datetime object
+    date_var = date_time_obj.date()
+
+    # Convert the date object to a string
+    date_str = date_var.strftime('%d/%m/%Y')
+    return date_str
+
 def update_holidays_record(staff_no, total_annual, total_leave):
     
     worksheet_to_update = SHEET.worksheet("staff_details")
@@ -308,8 +337,6 @@ def retrieve_allstaff_details():
         selected_details.append(col_1[0:7])
     TableIt.printTable(selected_details)
     print("\n")
-    print("Press Enter to continue...")
-    input("\033[92m" + ">> " + "\033[0m")
     return selected_details
 
 def display_leave_record():
