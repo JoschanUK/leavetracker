@@ -31,7 +31,7 @@ SHEET = GSPREAD_CLIENT.open('annual_leave')
 
 def get_user_selection():
 
-    sys_values = ["1", "2", "3", "4", "5", "6", "00"]
+    sys_values = ["1", "2", "3", "4", "5", "6", "7", "00"]
     global user_input
 
     while True:
@@ -39,15 +39,16 @@ def get_user_selection():
         print("\033[92m" + "< 1 >" + " - Create New Staff Record")
         print("\033[92m" + "< 2 >" + " - Take Leave")
         print("\033[92m" + "< 3 >" + " - Email Details")
-        print("\033[92m" + "< 4 >" + " - Retrieve All Staff Details")
-        print("\033[92m" + "< 5 >" + " - Delete Staff Record")
+        print("\033[92m" + "< 4 >" + " - Display All Staff Details")
+        print("\033[92m" + "< 5 >" + " - Display Staff Leave Record")
         print("\033[92m" + "< 6 >" + " - Clear Screen")
+        print("\033[92m" + "< 7 >" + " - Delete Staff Record")
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
         try:
             user_input = int(input(">> " + "\033[0m"))
         except ValueError:
-            print("Invalid input : Please enter a valid integer.")
+            print("Invalid input : Please enter a valid integer.\n")
             get_user_selection()
         
         if validate_data_int(sys_values, user_input):
@@ -120,7 +121,7 @@ def create_new_record():
 
             new_list.append(user_input)
         else:
-            print("Invalid input : Please enter correct grade.")
+            print("Invalid input : Please enter correct grade.\n")
             create_new_record()
             break
 
@@ -219,9 +220,9 @@ def take_leave():
                 break
             
             else:
-                print("Invalid input : Please enter correct staff number.")            
+                print("Invalid input : Please enter correct staff number.\n")            
         except ValueError:
-            print("Invalid input: Please enter a valid integer.")
+            print("Invalid input: Please enter a valid integer.\n")
      
     """
     Get user input on the start date and end date of the annual leave and then calculate the no of days taken
@@ -274,12 +275,9 @@ def take_leave():
                 print(f"New leave details updated successfully\n")
                 break
             else:
-                print("Invalid input : Please enter correct leave code.")  
+                print("Invalid input : Please enter correct leave code.\n")  
         except ValueError:
-            print("Invalid input: Please enter a valid integer.")
-
-    
-   
+            print("Invalid input: Please enter a valid integer.\n")
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     
@@ -308,6 +306,52 @@ def retrieve_allstaff_details():
     print("\n")
     return selected_details
 
+def display_leave_record():
+
+    # Retrieve all staff details from spreadsheet function
+    selected_leave_details = []
+    selected_details = []
+    selected_details = retrieve_allstaff_details()
+    
+    while True:
+
+        """
+        Check how many staff are in the database. This number will be compare with the user input in case the user 
+        enter a wrong number.
+        """
+        total_staff = get_new_staff_number()
+
+        # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
+        print("\033[92m" + "Please select staff number to display that staff records :")
+        try:
+            user_input_staff = int(input(">> " + "\033[0m"))
+            
+            if int(total_staff) >= user_input_staff:
+                selected_record = selected_details[int(user_input_staff)]
+                """
+                Append retrieved information into new list and write to spreadsheet starting with
+                date, staff number, fname, lname, email, date start, date end, leave taken and reason
+                """
+                
+                # Retrieve staff leave details from spreadsheet
+                detail = SHEET.worksheet("records")
+                staff_leave_list = detail.get_all_values()
+                print ("Retrieving data from database ...\n")
+    
+                for row in staff_leave_list:
+                    staff_no = row
+                    if (str(staff_no[1]) != "staff_no"):
+                        if (int(staff_no[1]) == int(user_input_staff)):
+                            selected_leave_details.append(row[0:9])
+
+                TableIt.printTable(selected_leave_details)
+                print("\n")
+                break
+            
+            else:
+                print("Invalid input : Please enter correct staff number.\n")            
+        except ValueError:
+            print("Invalid input: Please enter a valid integer.\n")
 
 def delete_record():
     """
@@ -331,10 +375,10 @@ def delete_record():
                 print(f"Record successfully deleted\n")
                 break
             else:
-                print("Invalid input: Please enter correct staff number.")
+                print("Invalid input: Please enter correct staff number.\n")
 
         except ValueError:
-            print("Invalid input: Please enter a valid integer.")
+            print("Invalid input: Please enter a valid integer.\n")
         
 def send_email():
     
@@ -390,18 +434,23 @@ def main():
             option_selected = get_user_selection()
 
         elif int(option_selected) == 4:
-            print ("Retrieve All Staff Details ...\n")
+            print ("Display All Staff Details ...\n")
             retrieve_allstaff_details()
             option_selected = get_user_selection()
 
         elif int(option_selected) == 5:
-            print ("Delete Staff Records ...\n")  
-            delete_record()
+            print ("Display Staff Leave Record ...\n")  
+            display_leave_record()
             option_selected = get_user_selection()
 
         elif int(option_selected) == 6:
             print ("Clearing Screen ...\n")  
             os.system('clear')
+            option_selected = get_user_selection()
+
+        elif int(option_selected) == 7:
+            print ("Delete Staff Records ...\n")  
+            delete_record()
             option_selected = get_user_selection()
         
         else :
