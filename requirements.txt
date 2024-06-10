@@ -1,1 +1,20 @@
-# Your requirements go here
+cachetools==5.3.3
+cssselect==1.2.0
+cssutils==2.11.1
+dkimpy==1.1.6
+dnspython==2.6.1
+google-auth==2.30.0
+google-auth-oauthlib==1.2.0
+gspread==6.1.2
+lxml==5.2.2
+numpy==1.26.4
+oauthlib==3.2.2
+pandas==2.2.2
+premailer==3.10.0
+pyasn1==0.6.0
+pyasn1_modules==0.4.0
+pytz==2024.1
+requests-oauthlib==2.0.0
+rsa==4.9
+tzdata==2024.1
+yagmail==0.15.293
