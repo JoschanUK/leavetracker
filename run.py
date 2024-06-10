@@ -52,7 +52,7 @@ def get_user_selection():
         print("\033[92m" + "< 00 >" + " - Exit System\n")
 
         try:
-            user_input = int(input(">> " + "\033[0m"))
+            user_input = int(input(">> " + "\033[0m\n"))
         except ValueError:
             print("Invalid input : Please enter a valid integer.\n")
             get_user_selection()
@@ -109,8 +109,8 @@ def create_new_record():
 
     while True:
         # Get user input for staff grade
-        print("\033[92m" + f"Enter staff grade {grade_list[1:5]}")
-        user_input = input(">> " + "\033[0m")
+        print("\033[92m" + f"Enter staff grade {grade_list[1:5]}\n")
+        user_input = input(">> " + "\033[0m\n")
         user_input = user_input.upper()
         
         """
@@ -133,7 +133,7 @@ def create_new_record():
 
         # Get user input for first name, last name, email
         print("\033[92m" + "Enter staff first name")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
 
         print("\033[92m" + "Enter staff last name")
@@ -141,7 +141,7 @@ def create_new_record():
         new_list.append(user_input)
 
         print("\033[92m" + "Enter staff email address")
-        user_input = input(">> " + "\033[0m")
+        user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
 
         # Add annual leave to new list
@@ -210,7 +210,7 @@ def take_leave():
         # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
         print("\033[92m" + "Please select staff number :")
         try:
-            user_input_staff = int(input(">> " + "\033[0m"))
+            user_input_staff = int(input(">> " + "\033[0m\n"))
             
             if int(total_staff) >= user_input_staff:
                 selected_record = selected_details[int(user_input_staff)]
@@ -237,7 +237,7 @@ def take_leave():
     while True:
         try:
             print("\033[92m" + "Please enter a start date [DD/MM/YYYY] :")
-            user_input_start = input(">> " + "\033[0m")
+            user_input_start = input(">> " + "\033[0m\n")
             user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
             final_input_list.append(user_input_start)
             break
@@ -247,7 +247,7 @@ def take_leave():
     while True:
         try:
             print("\033[92m" + "Please enter end date [DD/MM/YYYY] :")
-            user_input_end = input(">> " + "\033[0m")
+            user_input_end = input(">> " + "\033[0m\n")
             user_input_end_dt = datetime.strptime(user_input_end, '%d/%m/%Y')
             final_input_list.append(user_input_end)
             
@@ -271,10 +271,9 @@ def take_leave():
     while True:
         # Allow user to select which the leave code
         print("\033[92m" + "Please select the leave code :")
-        # user_input = input(">> " + "\033[0m")
-
+       
         try:
-            user_input = int(input(">> " + "\033[0m"))
+            user_input = int(input(">> " + "\033[0m\n"))
             """
             if user select 1 which is holiday or time off, the system will deduct the no of leave and update the staff details.
             if user select 2 which is sick leave, the system will update the sick leave column.
@@ -294,7 +293,7 @@ def take_leave():
                 worksheet_to_update.append_row(final_input_list)
                 print(f"New leave details updated successfully\n")
                 print("Press Enter to continue...")
-                input("\033[92m" + ">> " + "\033[0m")
+                input("\033[92m" + ">> " + "\033[0m\n")
                 break
             else:
                 print("Invalid input : Please enter correct leave code.\n")  
@@ -346,7 +345,7 @@ def display_leave_record():
         # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
         print("\033[92m" + "Please select staff number to display that staff records :")
         try:
-            user_input_staff = int(input(">> " + "\033[0m"))
+            user_input_staff = int(input(">> " + "\033[0m\n"))
             
             if int(total_staff) >= user_input_staff:
                 selected_record = selected_details[int(user_input_staff)]
@@ -369,7 +368,7 @@ def display_leave_record():
                 TableIt.printTable(selected_leave_details)
                 print("\n")
                 print("Press Enter to continue...")
-                input("\033[92m" + ">> " + "\033[0m")
+                input("\033[92m" + ">> " + "\033[0m\n")
                 break
             
             else:
@@ -389,7 +388,7 @@ def delete_record():
         # Allow user to select which staff record to delete by enter the staff number
         print("\033[92m" + "Please select staff number :")
         try:
-            user_input_staff = int(input(">> " + "\033[0m"))
+            user_input_staff = int(input(">> " + "\033[0m\n"))
             # Retrieve the total number of staffs in the database
             total_staff = get_new_staff_number()
             if int(total_staff) >= user_input_staff:
@@ -398,7 +397,7 @@ def delete_record():
                 worksheet_to_update.delete_rows(int(user_input_staff)+1)
                 print(f"Record successfully deleted\n")
                 print("Press Enter to continue...")
-                input("\033[92m" + ">> " + "\033[0m")
+                input("\033[92m" + ">> " + "\033[0m\n")
                 break
             else:
                 print("Invalid input: Please enter correct staff number.\n")
@@ -423,7 +422,7 @@ def send_email():
         # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
         print("\033[92m" + "Please select staff number to email the staff :")
         try:
-            user_input_staff = int(input(">> " + "\033[0m"))
+            user_input_staff = int(input(">> " + "\033[0m\n"))
             
             if int(total_staff) >= user_input_staff:
                 selected_record = selected_details[int(user_input_staff)]
