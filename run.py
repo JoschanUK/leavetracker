@@ -410,13 +410,30 @@ def send_email():
     
     # First to call the retrieve all staff details
     selected_details = []
-
     selected_details = retrieve_allstaff_details()
     
-    # Allow user to select which staff to send the email to by enter the staff number
-    print("\033[92m" + "Please select staff number to email the staff :")
-    user_input_staff = input(">> " + "\033[0m")
-    selected_record = selected_details[int(user_input_staff)]
+    while True:
+        
+        """ 
+        Check how many staff are in the database. This number will be compare with the user input in case the user 
+        enter a wrong number.
+        """
+        total_staff = get_new_staff_number()
+
+        # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
+        print("\033[92m" + "Please select staff number to email the staff :")
+        try:
+            user_input_staff = int(input(">> " + "\033[0m"))
+            
+            if int(total_staff) >= user_input_staff:
+                selected_record = selected_details[int(user_input_staff)]
+                print(selected_record)
+                break
+            else:
+                print("Invalid input : Please enter correct staff number.\n")            
+        except ValueError:
+            print("Invalid input: Please enter a valid integer.\n")
+
 
     """
     Setting up the system to send an email
