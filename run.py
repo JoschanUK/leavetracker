@@ -13,7 +13,11 @@ from google.oauth2.service_account import Credentials
 import os
 import TableIt #To create the table in the terminal
 import time
-import smtplib #To send emails out
+# To send email
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from datetime import date 
 from datetime import datetime
 import pandas as pd
@@ -234,10 +238,8 @@ def take_leave():
         try:
             print("\033[92m" + "Please enter a start date [DD/MM/YYYY] :")
             user_input_start = input(">> " + "\033[0m")
-            user_input_start = datetime.strptime(user_input_start, '%d/%m/%Y')
+            user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
             final_input_list.append(user_input_start)
-            user_input_start = remove_time(user_input_start)
-            print(user_input_start)
             break
         except ValueError:
             print("Invalid input: Please enter a valid start date.\n")
@@ -246,10 +248,9 @@ def take_leave():
         try:
             print("\033[92m" + "Please enter end date [DD/MM/YYYY] :")
             user_input_end = input(">> " + "\033[0m")
-            user_input_end = datetime.strptime(user_input_end, '%d/%m/%Y')
+            user_input_end_dt = datetime.strptime(user_input_end, '%d/%m/%Y')
             final_input_list.append(user_input_end)
-            user_input_end = remove_time(user_input_end)
-            print(user_input_end)
+            
             break
         except ValueError:
             print("Invalid input: Please enter a valid end date.\n")
@@ -299,18 +300,6 @@ def take_leave():
                 print("Invalid input : Please enter correct leave code.\n")  
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
-
-def remove_time(date_time_var):
-
-    # Convert to Pandas datetime object
-    date_time_obj = pd.to_datetime(date_time_var)
-
-    # Remove time from the datetime object
-    date_var = date_time_obj.date()
-
-    # Convert the date object to a string
-    date_str = date_var.strftime('%d/%m/%Y')
-    return date_str
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     
@@ -428,26 +417,48 @@ def send_email():
     print("\033[92m" + "Please select staff number to email the staff :")
     user_input_staff = input(">> " + "\033[0m")
     selected_record = selected_details[int(user_input_staff)]
-    
 
-    sender = "Administrator <mailtrap@leavetracker.com>"
-    receiver = "A Test User <jctest018@gmail.com>"
+    """
+    Setting up the system to send an email
+    """    
+    sender_email = "jctest018@gmail.com"
+    receiver_email = "***"
+    subject = "Leave Updated Record"
+    message = "This is a test email sent from Python."
 
-    message = f"""\
-    Subject: Hi Mailtrap
-    To: {receiver}
-    From: {sender}
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_username = "***"
+    smtp_password = "your security key"
+   
+    # Create a multipart message
+    msg = MIMEMultipart()
+    msg["From"] = sender_email
+    msg["To"] = receiver_email
+    msg["Subject"] = subject
 
-    This is a test e-mail message."""
+    # Add body to the email
+    msg.attach(MIMEText(message, "plain"))
 
-    with smtplib.SMTP("live.smtp.mailtrap.io", 587) as server:
+    try:
+        # Create a secure SSL/TLS connection to the SMTP server
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.ehlo()
         server.starttls()
-        server.login("api", "304db84d02f75d57cfc7dd73632fa378")
-        server.sendmail(sender, receiver, message)
-    
-    print("Email sent")
-    print("Press Enter to continue...")
-    input("\033[92m" + ">> " + "\033[0m")
+        server.ehlo()
+
+        # Login to the SMTP server
+        server.login(smtp_username, smtp_password)
+
+        # Send the email
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+
+        # Close the SMTP connection
+        server.quit()
+
+        print("Email sent successfully!")
+    except Exception as e:
+        print("Failed to send email. Error:", str(e))
 
 
 def main():
