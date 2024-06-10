@@ -427,7 +427,6 @@ def send_email():
             
             if int(total_staff) >= user_input_staff:
                 selected_record = selected_details[int(user_input_staff)]
-                print(selected_record)
                 break
             else:
                 print("Invalid input : Please enter correct staff number.\n")            
@@ -439,14 +438,14 @@ def send_email():
     Setting up the system to send an email
     """    
     sender_email = "jctest018@gmail.com"
-    receiver_email = "***"
+    receiver_email = selected_record[4]
     subject = "Leave Updated Record"
     message = "This is a test email sent from Python."
 
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    smtp_username = "***"
-    smtp_password = "your security key"
+    smtp_username = "jctest018@gmail.com"
+    smtp_password = "apple_test2468"
    
     # Create a multipart message
     msg = MIMEMultipart()
@@ -472,7 +471,6 @@ def send_email():
 
         # Close the SMTP connection
         server.quit()
-
         print("Email sent successfully!")
     except Exception as e:
         print("Failed to send email. Error:", str(e))
