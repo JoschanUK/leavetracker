@@ -442,7 +442,7 @@ def send_email():
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     smtp_username = "jctest018"
-    smtp_password = "apple_test2468"
+    smtp_password = "hckq mhew altd seoe"
    
     # Create a multipart message
     msg = MIMEMultipart()
