@@ -340,7 +340,7 @@ def display_leave_record():
         enter a wrong number.
         """
         total_staff = get_new_staff_number()
-
+    
         # Allow user to select which staff is taking leave by enter the staff number and checking that it is an int
         print("\033[92m" + "Please select staff number to display that staff records :")
         try:
@@ -364,11 +364,18 @@ def display_leave_record():
                         if (int(staff_no[1]) == int(user_input_staff)):
                             selected_leave_details.append(row[0:9])
 
-                TableIt.printTable(selected_leave_details)
-                print("\n")
-                print("Press Enter to continue...")
-                input("\033[92m" + ">> " + "\033[0m\n")
-                break
+                if not selected_leave_details: 
+                    print("Staff has not taken any leave. No record found")
+                    print("\n")
+                    print("Press Enter to continue...")
+                    input("\033[92m" + ">> " + "\033[0m\n")
+                    break
+                else:
+                    TableIt.printTable(selected_leave_details)
+                    print("\n")
+                    print("Press Enter to continue...")
+                    input("\033[92m" + ">> " + "\033[0m\n")
+                    break
             
             else:
                 print("Invalid input : Please enter correct staff number.\n")            
@@ -440,7 +447,7 @@ def send_email():
     subject = "Leave Updated Record"
 
     # Creating email content
-    email_content = ("This is a auto-generated email." + "\n\n" "Total leave remaining : " + selected_record[5] +"\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
+    email_content = ("**This is an auto-generated email**" + "\n\n" "Total leave remaining : " + selected_record[5] +"\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
     print(email_content)
 
     message = email_content
