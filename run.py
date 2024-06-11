@@ -498,6 +498,9 @@ def main():
         elif int(option_selected) == 4:
             print ("Display All Staff Details ...\n")
             retrieve_allstaff_details()
+            print("\n")
+            print("Press Enter to continue...")
+            input("\033[92m" + ">> " + "\033[0m\n")
             option_selected = get_user_selection()
 
         elif int(option_selected) == 5:
