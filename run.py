@@ -22,8 +22,6 @@ from datetime import date
 from datetime import datetime
 import pandas as pd
 
-#smtpObj = smtplib.SMTP( [live.smtp.mailtrap.io [587]] )
-
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
