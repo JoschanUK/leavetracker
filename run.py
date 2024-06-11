@@ -437,7 +437,12 @@ def send_email():
     sender_email = "jctest018@gmail.com"
     receiver_email = selected_record[4]
     subject = "Leave Updated Record"
-    message = "This is a test email sent from Python."
+
+    # Creating email content
+    email_content = ("This is a auto-generated email." + "\n\n" "Total leave remaining : " + selected_record[5] +"\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
+    print(email_content)
+
+    message = email_content
 
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
