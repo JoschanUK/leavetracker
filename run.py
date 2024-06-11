@@ -4,7 +4,7 @@
 
 #Spreadsheet weblink
 """
-https://docs.google.com/spreadsheets/d/1Gr5Il6Gqvle0BufpurFN36k5Xo4LHmFI/edit?gid=1514418171#gid=1514418171
+https://docs.google.com/spreadsheets/d/1eRzudCSUTXbOoQNGQWoZAAvzvJGvzIE8t3iOZxcQmvc/edit?gid=334103161#gid=334103161
 """
 
 
@@ -146,8 +146,9 @@ def create_new_record():
         new_list.append(annual_leave)
         new_list.append(0)
     
-        #Append new staff details to spreadsheet
-        print(f"Updating rew record...\n")
+        #Append new staff details to spreadsheet00
+        
+        print(f"Updating new record...\n")
         worksheet_to_update = SHEET.worksheet("staff_details")
         worksheet_to_update.append_row(new_list)
         print(f"New staff details updated successfully\n")
