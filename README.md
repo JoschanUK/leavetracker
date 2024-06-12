@@ -109,7 +109,7 @@ Option <00> is to end the programme.
 
 # Features left to implement
 
-- To manually update a particular cell in the google sheet
+1. To manually update a particular cell in the google sheet
 
 
 # Testing
@@ -163,13 +163,17 @@ The live link can be found here - https://joschanuk.github.io/love-dogs/
 
 **Content and Media**
 
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/).
-- External links are taken from RSPCA, Battersea and Dogs Trust.
-- Source codes from Love Running to build my Sign up for dog walk form and the four social media icons.
-- Downloaded a mp3 and mp4 (music and video) from Youtube.
+- Understanding the source codes from Love Sandwiches to build my own programme.
+
+- To display the data in a [table format](https://github.com/SuperMaZingCoder/TableIt).
+
+- To calculate the [no of days](https://www.w3resource.com/python-exercises/python-basic-exercise-14.php) when user enter the start and end dates.
+
+- To be able to [delete a row](https://stackoverflow.com/questions/14625617/how-to-delete-remove-row-from-the-google-spreadsheet-using-gspread-lib-in-pytho#:~:text=Since%20gspread%20version%200.5.,a%20row%20with%20delete_row()%20).
+
+- How to update a [particular cell](https://readthedocs.org/projects/gspread/downloads/pdf/latest/#:~:text=Here%20are%20the%20methods%20that,the%20cells%20of%20the%20sheet.&text=get()%20fetches%20all%20values%20from%20a%20range%20of%20cells.&text=batch_get()%20can%20fetch%20values,cells%20with%20one%20API%20call.&text=update()%20lets%20you%20update,with%20a%20list%20of%20lists) in the google sheet.
+
+- How to send [email](https://medium.com/@ak942389/sending-email-with-python-using-smtp-4cd210e8de95). 
 - [W3school](https://www.w3schools.com) - For guiding me how to write the codes.
-- Text in the caring page is taken from website [Animal Foundation.com](https://animalfoundation.com/whats-going-on/blog/basic-necessities-proper-pet-care).
-- All walker's pictures are taken from my personal photo album.
-- Instruction to deploy is taken from [Github](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-- Putting google maps using iframe [stackoverflow](https://stackoverflow.com/questions/23737427/how-to-put-two-iframes-side-by-side).
-- Pure CSS Hamburger [fold-out menu](https://codepen.io/erikterwan/pen/EVzeRP). 
+
+- Instruction to deploy is taken from [Github]().
