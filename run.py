@@ -238,8 +238,13 @@ def take_leave():
             print("\033[92m" + "Please enter a start date [DD/MM/YYYY] :")
             user_input_start = input(">> " + "\033[0m\n")
             user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
-            final_input_list.append(user_input_start)
-            break
+            result = validate_startend_date(user_input_start, user_input_staff)
+            print(result)
+            if result == False:
+                final_input_list.append(user_input_start)
+                break
+            else:
+                print("Invalid input: Staff has taken leave.\n")
         except ValueError:
             print("Invalid input: Please enter a valid start date.\n")
     
@@ -249,7 +254,6 @@ def take_leave():
             user_input_end = input(">> " + "\033[0m\n")
             user_input_end_dt = datetime.strptime(user_input_end, '%d/%m/%Y')
             final_input_list.append(user_input_end)
-            
             break
         except ValueError:
             print("Invalid input: Please enter a valid end date.\n")
@@ -298,6 +302,28 @@ def take_leave():
                 print("Invalid input : Please enter correct leave code.\n")  
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
+
+def validate_startend_date(user_date, staff_no):
+    """
+    When user input the start and end date when taking leave, the dates are checked against the records to ensure that there is
+    no duplication
+    """
+
+    
+    # Retrieve staff leave details from spreadsheet
+    detail = SHEET.worksheet("records")
+    all_leave_list = detail.get_all_values()
+    print ("Retrieving data from database ...\n")
+    
+    for date_row in all_leave_list:
+        
+        data_date = date_row
+        #print(data_date)
+        if (str(data_date[1]) == str(staff_no)):
+            
+            if (str(user_date) == str(data_date[5]) or str(user_date) <= str(data_date[6])):
+                print("YES")
+                return True
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     
