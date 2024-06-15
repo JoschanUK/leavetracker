@@ -308,7 +308,6 @@ def validate_startend_date(user_date, staff_no):
     When user input the start and end date when taking leave, the dates are checked against the records to ensure that there is
     no duplication
     """
-
     
     # Retrieve staff leave details from spreadsheet
     detail = SHEET.worksheet("records")
@@ -318,12 +317,12 @@ def validate_startend_date(user_date, staff_no):
     for date_row in all_leave_list:
         
         data_date = date_row
-        #print(data_date)
         if (str(data_date[1]) == str(staff_no)):
-            
-            if (str(user_date) == str(data_date[5]) or str(user_date) <= str(data_date[6])):
-                print("YES")
+            print(data_date[5])
+            if (str(data_date[5]) <= str(user_date) <= str(data_date[6])):
                 return True
+    else:
+        return False
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     
