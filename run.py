@@ -13,8 +13,7 @@ from google.oauth2.service_account import Credentials
 import os
 import TableIt #To create the table in the terminal
 import time
-# To send email
-import smtplib
+import smtplib # To send email
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -34,6 +33,9 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('annual_leave')
 
 def get_user_selection():
+    """
+    A function to get user selection. This is also the main page which the user will see once the programme is loaded
+    """
 
     sys_values = ["1", "2", "3", "4", "5", "6", "7", "00"]
     global user_input
@@ -54,7 +56,6 @@ def get_user_selection():
         except ValueError:
             print("Invalid input : Please enter a valid integer.\n")
             get_user_selection()
-        
         if validate_data_int(sys_values, user_input):
             break
         else:
@@ -63,7 +64,7 @@ def get_user_selection():
     
 def validate_data_int(sys_values, user_value):
     """
-    To check if the user entry and the system values are correct
+    To check if the user entry on numbers and the system values are correct
     """
     x = 0
     for value in sys_values:
@@ -74,7 +75,7 @@ def validate_data_int(sys_values, user_value):
 
 def validate_data_str(sys_values, user_value):
     """
-    To check if the user entry and the system values are correct
+    To check if the user entry on strings and the system values are correct
     """
     x = 0
     for value in sys_values:
@@ -84,7 +85,6 @@ def validate_data_str(sys_values, user_value):
     return False
 
 def create_new_record():
-
     """
     This is a function to create a new staff record and to append into the staff_details
     tab of the spreasheet
@@ -92,7 +92,6 @@ def create_new_record():
     new_list = []
     grade_list = []
     
-
     """
     Call a function to get the next staff number from the spreadsheet
     """
@@ -122,7 +121,6 @@ def create_new_record():
             annual_leave = get_grade_total_leave(user_input)
             if annual_leave == False:
                 break
-
             new_list.append(user_input)
         else:
             print("Invalid input : Please enter correct grade.\n")
@@ -167,6 +165,9 @@ def get_new_staff_number():
 
 def get_grade_total_leave(user_input):
 
+    """
+    A function which retrieve from the spreadsheet the leave entitlement that is linked to the job grade
+    """
     detail = SHEET.worksheet("grade")
     grade_leave = detail.get_all_values()
 
@@ -199,7 +200,6 @@ def take_leave():
     selected_details = retrieve_allstaff_details()
     
     while True:
-
         """
         Check how many staff are in the database. This number will be compare with the user input in case the user 
         enter a wrong number.
@@ -224,7 +224,6 @@ def take_leave():
                 final_input_list.append(selected_record[3])
                 final_input_list.append(selected_record[4])
                 break
-            
             else:
                 print("Invalid input : Please enter correct staff number.\n")            
         except ValueError:
@@ -325,20 +324,26 @@ def validate_startend_date(user_date, staff_no):
         return False
 
 def update_holidays_record(staff_no, total_annual, total_leave):
-    
+    """
+    This function update the total number of days taken using the start and end date
+    """
     worksheet_to_update = SHEET.worksheet("staff_details")
     total_annual = int(total_annual) - int(total_leave)
     worksheet_to_update.update_cell(int(staff_no)+1, 6, total_annual)
 
 def update_sickness_record(staff_no, total_sick, no_sick):
-
+    """
+    This function will update the spreadsheet, add the new total sick leave taken to the existing sick leave
+    """
     worksheet_to_update = SHEET.worksheet("staff_details")
     total_sick = int(total_sick) + int(no_sick)
     worksheet_to_update.update_cell(int(staff_no)+1, 7, total_sick)
 
 
 def retrieve_allstaff_details():
-
+    """
+    This function retrieve all the data found in the tab - staff details in the spreadsheet and display it in a table for user
+    """
     selected_details = []
     # Retrieve staff details from spreadsheet
     detail = SHEET.worksheet("staff_details")
@@ -352,7 +357,10 @@ def retrieve_allstaff_details():
     return selected_details
 
 def display_leave_record():
-
+    """
+    This function display a selected staff leave records. User will need to input the staff number and the system will display those
+    records in a table format
+    """
     # Retrieve all staff details from spreadsheet function
     selected_leave_details = []
     selected_details = []
@@ -401,7 +409,6 @@ def display_leave_record():
                     print("Press Enter to continue...")
                     input("\033[92m" + ">> " + "\033[0m\n")
                     break
-            
             else:
                 print("Invalid input : Please enter correct staff number.\n")            
         except ValueError:
@@ -432,7 +439,6 @@ def delete_record():
                 break
             else:
                 print("Invalid input: Please enter correct staff number.\n")
-
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
         
@@ -443,7 +449,6 @@ def send_email():
     selected_details = retrieve_allstaff_details()
     
     while True:
-        
         """ 
         Check how many staff are in the database. This number will be compare with the user input in case the user 
         enter a wrong number.
@@ -462,7 +467,6 @@ def send_email():
                 print("Invalid input : Please enter correct staff number.\n")            
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
-
 
     """
     Setting up the system to send an email
@@ -509,7 +513,6 @@ def send_email():
         print("Email sent successfully!")
     except Exception as e:
         print("Failed to send email. Error:", str(e))
-
 
 def main():
     """
@@ -559,11 +562,6 @@ def main():
         else :
             print("Exiting Tracking System ...\n")
             break 
-
-    
-    
-    
-        
 
 print("\033[1m" + "Welcome to Leave Tracking System \n" + "\033[0m")
 print("\033[1m" + "System Version 1.0\n" + "\033[0m")
