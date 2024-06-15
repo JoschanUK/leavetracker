@@ -54,7 +54,7 @@ Option <3> is to email the staff the latest total annual leave and the number of
     - User is to input the staff number so that the system and generate an email and send to the user email address which is stored in the google sheet under the worksheet tab staff_details.
 
 ![alt text](images/Email.jpg)
-
+n
 
 **option <4> - Display All Staff Details**
 
@@ -106,62 +106,63 @@ Option <00> is to end the programme.
 4. Delete a record in a google sheet.
 5. Updating a particular cell in a google sheet.
 6. Sending an email.
-
-# Features left to implement
-
-1. To manually update a particular cell in the google sheet
+7. The ability to check user input and return an error if they have entered a wrong input. ie.
+    - System expecting an integer but user entered a string.
+    - System expecting a string but user entered an integer.
+    - System expecting a date but user entered an integer or a string.
+8. Able to compare the dates in the google sheet against the user input. ie. 
+    - To check if user has already taken a leave on that date.
 
 
 # Testing
 
 **Validator Testing**
 
-- HTML
-  - No errors were returned when passing through the official [W3C validator](https://validator.w3.org)
+- System Testing
 
-  | Link| Result |
-  | --- | ---|
-  |https://joschanuk.github.io/love-dogs/index.html | No Error |
-  |https://joschanuk.github.io/love-dogs/gallery.html | No Error |
-  |https://joschanuk.github.io/love-dogs/caring.html | No Error |
-  |https://joschanuk.github.io/love-dogs/contact.html | No Error |
-
-- CSS
-  - No errors were found when passing through the official [(Jigsaw) validator](https://jigsaw.w3.org/css-validator/)
-
-- Web Pages Testing
-
-    | Test | Expectation | How to carry out | Result |
+    | Test | Tasks | What happen | Result |
     | ---  | --- | ---| ---|
-    | Nav bar | To be able to bring you to another webpage | By clicking on the text|Pass|
-    | Dog walk sign up | User details are captured | Enter sign up details | Pass|
-    | Social Media | Re direct to the website log in page | Click on the icons | Pass|
-    | Audio| The audio is played | Clicking on the play button | Pass|
-    | Video | The video is played| Clicking on the Play button| Pass|
-    | Map | The Map will be enlarged | Clicking on the map | Pass|
-    | Resizing on different devices | The layout is correct | Using the inspect code | Pass|
-    | Deploy Website | Website is working and usable | Deploy from Github| Pass|
+    | User option selection | User to input 1,2,3,4,5,6,7 or 00 | Inputting the number | Pass|
+    | User option selection | User enter wrong number or text | Enter a number or text wrongly. System display error message | Pass|
+    | Create staff record (option 1) | System display list of staffs in the organisation | Input number 1 | Pass|
+    | Create staff record (option 1)| System display Job Grade for user to select | Select A, B, C, D | Pass|
+    | Create staff record (option 1)| System ask user for input (First Name, Last Name, Email address) | User enter details | Pass|
+    | Create staff record (option 1)| System then create a record in the google sheet | System automation | Pass|
+    | Take Leave (option 2)| System display list of staffs in the organisation | User enter staff number | Pass|
+    | Take Leave (option 2)| User entered the wrong staff number | System display error message | Pass|
+    | Take Leave (option 2)| System ask user for input (Start and end date) | User input start and end date | Pass|
+    | Take Leave (option 2)| User enter wrong (Start and end date) | System display error message | Pass|
+    | Take Leave (option 2)| System check for any duplication of dates taken  | System automation | Pass|
+    | Take Leave (option 2)| System display a list of leave reasons | User select option | Pass|
+    | Take Leave (option 2)| User enter the wrong reason | System display error message | Pass|
+    | Take Leave (option 2)| System then create a record in the google sheet | System automation | Pass|
+    | Email Details (option 3)| System display list of staffs in the organisation | User enter staff number | Pass|
+    | Email Details (option 3)| User entered the wrong staff number | System display error message | Pass|
+    | Email Details (option 3)| Email send automatically | System automation | Pass|
+    | Display All Staff Details (option 4)| System display list of staffs in the organisation | User enter staff number | Pass|
+    | Display All Staff Details (option 4)| User entered the wrong staff number | System display error message | Pass|
+    | Display All Staff Details (option 4)| System retrieve from google sheet and display as list | System automation | Pass|
+    | Display Staff Details (option 5)| System display list of staffs in the organisation | User enter staff number | Pass|
+    | Display Staff Details (option 5)| User entered the wrong staff number | System display error message | Pass|
+    | Display Staff Details (option 5)| Syste, display the selected staff records from google sheet | System automation | Pass|
+    | Clear Screen (option 6)| System clear the screen | System automation | Pass|
+    | Delete Staff Record (option 7)| System display list of staffs in the organisation | User enter staff number | Pass|
+    | Delete Staff Record (option 7)| User entered the wrong staff number | System display error message | Pass|
+    | Delete Staff Record (option 7)| System delete the record which user has selected | System automation | Pass|
+
 
 # Deployment
 
-The site was deployed to GitHub pages. The steps to deploy are as follows:
+The site was deployed to GitHub and Heroku pages. The steps to deploy are as follows:
 
-1. On GitHub, navigate to your site's repository.
-2. Under your repository name, click  Settings. If you cannot see the "Settings" tab, select the  dropdown menu, then click Settings.
-3. Screenshot of a repository header showing the tabs. The "Settings" tab is highlighted by a dark orange outline.
-4. In the "Code and automation" section of the sidebar, click  Pages.
-5. Under "Build and deployment", under "Source", select Deploy from a branch.
-6. Under "Build and deployment", use the branch dropdown menu and select a publishing source.
-Screenshot of Pages settings in a GitHub repository. A menu to select a branch for a publishing source, labeled "None," is outlined in dark orange.
-7. Click Save.
 
-Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
 
-The live link can be found here - https://joschanuk.github.io/love-dogs/
+
+The live link can be found here - https://leavetrackeruk-7e349952c4d1.herokuapp.com/
 
 # Credits
 
-**Content and Media**
+**Content**
 
 - Understanding the source codes from Love Sandwiches to build my own programme.
 
