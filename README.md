@@ -1,5 +1,5 @@
 # Introduction
-Leave Tracking System is a programme which automatic and help the organisation to keep track of the staff annual leave and sick leave.
+Leave Tracking System is a programme which automate and help the organisation to keep track of the staff annual leave and sick leave.
 They system is able to create new record according to job grade, create new annual leave, email the outstanding balance to staff and is able to delete the record when the staff leave the organisation. It is a system that is linked to a google sheet which keeps track of the information. 
 
 ![alt text](<images/main screen.jpg>) [alt text](README.md)
@@ -39,9 +39,10 @@ Option <2> is used to keep track of leave taken by the staffs in the organisatio
     - The programme will first display the list of staffs found in the google sheet under the worksheet tab staff_details.
     - User is to input the staff number who is going to take an annual leave. 
     - After which, the start date and end date is to be entered by the user.
+    - The system will then check if there is any duplication of dates found in the google sheet under table records. 
     - The programme will then display the reason for taking the annual leave. The reasons are holidays/time off, sickness, childcare and others. These reasons are extracted from the google sheet under the worksheet tab reason.
     - Once the user has entered the reason. A new record will be created with all these information and stored in the google sheet under the worksheet tab records.
-    - If user selected, holidays/time off or sickness reasons. The system will update the worksheet tab staff_details to deduct the annual leave for holidays/ time off and to add the number of days taken for sickness reason.
+    - If user has selected, holidays/time off or sickness reasons. The system will update the worksheet tab staff_details to deduct the annual leave for holidays/ time off and to add the number of days taken for sickness reason.
 
 ![alt text](images/takeleave.jpg)   
 
@@ -97,6 +98,75 @@ Option <7> is to delete a slected staff record. The programme will:
 **option <00> - Exit System**
 
 Option <00> is to end the programme.
+
+
+# Database - Google Sheet
+
+The filename of the google sheet is annual_leave.
+To access this file. Please sign on with the following details :
+
+email : jctest018@gmail.com , password: apple_test2468
+
+There are a total of 4 tabs namely :
+
+1. Grade
+2. Reason
+3. Staff_details
+4. Records
+
+
+**Tab 1 - Grade**
+
+It consists of the following fields and records:
+
+| staff_grade | num_leave | 
+| ---  | --- | 
+| A | 28 | 
+| B | 25 |
+| C | 23 |
+| D | 21 |
+
+
+**Tab 2 - reason**
+
+It consists of the following fields and records:
+
+| leave_code | reason | 
+| ---  | --- | 
+| 1 | holidays/ time off | 
+| 2 | sickness |
+| 3 | childcare |
+| 4 | others |
+
+
+**Tab 3 - staff_details**
+
+It consists of the following fields and this tab is updated by user input:
+
+- staff_no 
+- grade 
+- fname 
+- lname  
+- email 
+- total_annual 
+- taken_sick_leave
+
+
+**Tab 4 - records**
+
+It consists of the following fields and this tab is updated by user input:
+
+- today_date
+- staff_no 
+- grade 
+- fname 
+- lname  
+- email 
+- start_date 
+- end_date
+- no_days_taken
+- reason
+
 
 # Python Features implemented in this programme.
 
