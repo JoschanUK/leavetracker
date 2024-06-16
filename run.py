@@ -2,7 +2,7 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
-#Spreadsheet weblink
+#Spreadsheet weblink - Please click on it to see the read-only google sheet
 """
 https://docs.google.com/spreadsheets/d/1eRzudCSUTXbOoQNGQWoZAAvzvJGvzIE8t3iOZxcQmvc/edit?gid=334103161#gid=334103161
 """
@@ -290,7 +290,7 @@ def take_leave():
                 final_input_list.append(reasons[1])
     
                 #Append new leave details to spreadsheet
-                print(f"Updating rew record...\n")
+                print(f"Updating new record...\n")
                 worksheet_to_update = SHEET.worksheet("records")
                 worksheet_to_update.append_row(final_input_list)
                 print(f"New leave details updated successfully\n")
@@ -317,7 +317,6 @@ def validate_startend_date(user_date, staff_no):
         
         data_date = date_row
         if (str(data_date[1]) == str(staff_no)):
-            print(data_date[5])
             if (str(data_date[5]) <= str(user_date) <= str(data_date[6])):
                 return True
     else:
