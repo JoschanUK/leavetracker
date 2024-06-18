@@ -41,10 +41,6 @@ def security_check():
     detail = SHEET.worksheet("password")
     password = detail.get_all_values()
     sys_username_password = password[1]
-    
-    print(password[1])
-    sys_username_password[0]
-    sys_username_password[1]
    
     while True:
         print("\033[92m" + f"Please select user name : \n")
