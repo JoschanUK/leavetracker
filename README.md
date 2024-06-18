@@ -117,15 +117,23 @@ To access this file. Please sign on with the following details :
 
 email : jctest018@gmail.com , password: apple_test2468
 
-There are a total of 4 tabs namely :
+There are a total of 5 tabs namely :
 
-1. Grade
-2. Reason
-3. Staff_details
-4. Records
+1. Password
+2. Grade
+3. Reason
+4. Staff_details
+5. Records
 
+**Tab 1 - Password**
 
-**Tab 1 - Grade**
+It consists of the following fields and records:
+
+| user | password | 
+| ---  | --- | 
+| admin | password123 | 
+
+**Tab 2 - Grade**
 
 It consists of the following fields and records:
 
@@ -137,7 +145,7 @@ It consists of the following fields and records:
 | D | 21 |
 
 
-**Tab 2 - reason**
+**Tab 3 - reason**
 
 It consists of the following fields and records:
 
@@ -149,7 +157,7 @@ It consists of the following fields and records:
 | 4 | others |
 
 
-**Tab 3 - staff_details**
+**Tab 4 - staff_details**
 
 It consists of the following fields and this tab is updated by user input:
 
@@ -162,7 +170,7 @@ It consists of the following fields and this tab is updated by user input:
 - taken_sick_leave
 
 
-**Tab 4 - records**
+**Tab 5 - records**
 
 It consists of the following fields and this tab is updated by user input:
 
@@ -192,6 +200,8 @@ It consists of the following fields and this tab is updated by user input:
     - System expecting a date but user entered an integer or a string.
 8. Able to compare the dates in the google sheet against the user input. ie. 
     - To check if user has already taken a leave on that date.
+9. Only allow access when user enters the correct user name and password.
+10. When user entered the job grade, the programme will conver the str entered by user into uppercase.
 
 
 # Testing
@@ -202,6 +212,8 @@ It consists of the following fields and this tab is updated by user input:
 
     | Test | Tasks | What happen | Result |
     | ---  | --- | ---| ---|
+    | Accessing the system | User to input user name and password | Inputting the user name and password | Pass|
+    | Accessing the system | User input the wrong user name and password |Enter a number or text wrongly. System display error message | Pass|
     | User option selection | User to input 1,2,3,4,5,6,7 or 00 | Inputting the number | Pass|
     | User option selection | User enter wrong number or text | Enter a number or text wrongly. System display error message | Pass|
     | Create staff record (option 1) | System display list of staffs in the organisation | Input number 1 | Pass|
