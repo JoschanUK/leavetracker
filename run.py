@@ -268,7 +268,6 @@ def take_leave():
             user_input_start = input(">> " + "\033[0m\n")
             user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
             result = validate_startend_date(user_input_start, user_input_staff)
-            print(result)
             if result == False:
                 final_input_list.append(user_input_start)
                 break
