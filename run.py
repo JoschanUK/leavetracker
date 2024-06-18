@@ -32,6 +32,40 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('annual_leave')
 
+
+def security_check():
+    """
+    To check user input against the spreadsheet to ensure that password is entered correctly
+    """
+
+    detail = SHEET.worksheet("password")
+    password = detail.get_all_values()
+    sys_username_password = password[1]
+    
+    print(password[1])
+    sys_username_password[0]
+    sys_username_password[1]
+   
+    while True:
+        print("\033[92m" + f"Please select user name : \n")
+        user_input = str(input(">> " + "\033[0m\n"))
+        
+        if user_input ==  sys_username_password[0]:
+            break
+        else: 
+            print("Invalid input : Please enter a valid user name.\n")
+
+    while True:
+        print("\033[92m" + f"Please select password : \n")
+        user_input = str(input(">> " + "\033[0m\n"))
+        
+        if user_input ==  sys_username_password[1]:
+            os.system('clear')
+            break
+        else: 
+            print("Invalid input : Please enter a correct password.\n")
+
+
 def get_user_selection():
     """
     A function to get user selection. This is also the main page which the user will see once the programme is loaded
@@ -515,9 +549,12 @@ def send_email():
 
 def main():
     """
-    Creating a Main function to run all the program functions
-    1. Get user selection
+    Creating a Main function to check user has entered the correct password and then run all the program functions
+    1. Enter correct password
+    2. Get user selection
     """
+
+    security_check()
     option_selected = get_user_selection()
     while option_selected != 00:
         if int(option_selected) == 1:
