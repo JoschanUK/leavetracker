@@ -208,6 +208,10 @@ It consists of the following fields and this tab is updated by user input:
 
 **Validator Testing**
 
+- [CI Python Linter](https://pep8ci.herokuapp.com/)
+
+Code is put thru CI Python Linter and there is no error found.
+
 - System Testing
 
     | Test | Tasks | What happen | Result |
