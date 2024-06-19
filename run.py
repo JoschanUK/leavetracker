@@ -548,6 +548,14 @@ def main():
     1. Enter correct password
     2. Get user selection
     """
+    os.system('clear')
+    print("\033[1m" + "Welcome to Leave Tracking System \n" + "\033[0m")
+    print("\033[1m" + "System Version 1.0\n" + "\033[0m")
+    print("\033[1m" + "**Unauthorised use is strictly prohibited**\n\n" + "\033[0m")
+
+    today = date.today()
+    today = today.strftime("%d/%m/%Y")
+    print(f"Today date is {today}.\n\n")
 
     security_check()
     option_selected = get_user_selection()
@@ -593,12 +601,8 @@ def main():
         else :
             print("Exiting Tracking System ...\n")
             break 
+    print("Exiting Leave Tracking System ...\n")
+    main()
 
-print("\033[1m" + "Welcome to Leave Tracking System \n" + "\033[0m")
-print("\033[1m" + "System Version 1.0\n" + "\033[0m")
-print("\033[1m" + "**Unauthorised use is strictly prohibited**\n\n" + "\033[0m")
 
-today = date.today()
-today = today.strftime("%d/%m/%Y")
-print(f"Today date is {today}.\n\n")
 main()
