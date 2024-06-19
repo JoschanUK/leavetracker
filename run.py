@@ -150,9 +150,9 @@ def create_new_record():
         """
         grade_list = detail.col_values(1)
         result = validate_data_str(grade_list, user_input)
-        if result == True:
+        if result:
             annual_leave = get_grade_total_leave(user_input)
-            if annual_leave == False:
+            if not annual_leave:
                 break
             new_list.append(user_input)
         else:
@@ -164,7 +164,7 @@ def create_new_record():
         while True:
             print("\033[92m" + "Enter staff first name")
             user_input = input(">> " + "\033[0m\n")
-            if (user_input.isalpha() == True):
+            if user_input.isalpha():
                 new_list.append(user_input)
                 break
             else:
@@ -172,8 +172,7 @@ def create_new_record():
         while True:
             print("\033[92m" + "Enter staff last name")
             user_input = input(">> " + "\033[0m\n")
-            print(user_input. isalpha())
-            if (user_input.isalpha() == True):
+            if user_input.isalpha():
                 new_list.append(user_input)
                 break
             else:
@@ -183,8 +182,6 @@ def create_new_record():
             print("\033[92m" + "Enter staff email address")
             user_input = input(">> " + "\033[0m\n")
             result = validate_email(user_input)
-            print(result)
-
             if (result):
                 new_list.append(user_input)
                 break
@@ -303,7 +300,7 @@ def take_leave():
             user_input_start = input(">> " + "\033[0m\n")
             user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
             result = validate_startend_date(user_input_start, user_input_staff)
-            if result == False:
+            if not result:
                 final_input_list.append(user_input_start)
                 break
             else:
@@ -440,7 +437,7 @@ def display_leave_record():
         enter a wrong number.
         """
         total_staff = get_new_staff_number()
-    
+
         """
         Allow user to select which staff is taking leave by
         enter the staff number and checking that it is an int
@@ -479,7 +476,7 @@ def display_leave_record():
                     print("Press Enter to continue...")
                     input("\033[92m" + ">> " + "\033[0m\n")
                     break
-            else:
+            else:              
                 print("Invalid input : Please enter correct staff number.\n")    
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
@@ -553,7 +550,7 @@ def send_email():
     subject = "Leave Updated Record"
 
     # Creating email content
-    email_content = ("**This is an auto-generated email**" + "\n\n" "Total leave remaining : " + selected_record[5] +"\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
+    email_content = ("**This is an auto-generated email**" + "\n\n" "Total leave remaining : " + selected_record[5] + "\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
     print(email_content)
 
     message = email_content
@@ -594,7 +591,7 @@ def send_email():
 def main():
     """
     Creating a Main function to check user has entered
-    the correct password and then run all the program 
+    the correct password and then run all the program
     functions
     1. Enter correct password
     2. Get user selection
@@ -642,9 +639,9 @@ def main():
             print("Delete Staff Records ...\n")
             delete_record()
             option_selected = get_user_selection()
-        else :
+        else:
             print("Exiting Tracking System ...\n")
-            break 
+            break
     print("Exiting Leave Tracking System ...\n")
     main()
 
