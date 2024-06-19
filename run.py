@@ -158,6 +158,7 @@ def create_new_record():
             break
 
         # Get user input for first name, last name, email
+        """     
         print("\033[92m" + "Enter staff first name")
         user_input = input(">> " + "\033[0m\n")
         new_list.append(user_input)
@@ -165,6 +166,30 @@ def create_new_record():
         print("\033[92m" + "Enter staff last name")
         user_input = input(">> " + "\033[0m")
         new_list.append(user_input)
+        """
+        while True:
+            
+            print("\033[92m" + "Enter staff first name")
+            user_input = input(">> " + "\033[0m\n")
+            print(user_input. isalpha())
+                
+            if (user_input.isalpha()  == True):
+                new_list.append(user_input)
+                break
+            else:
+                print("Invalid input: Please enter a valid first name.\n")
+        while True:
+            
+            print("\033[92m" + "Enter staff last name")
+            user_input = input(">> " + "\033[0m\n")
+            print(user_input. isalpha())
+                
+            if (user_input.isalpha()  == True):
+                new_list.append(user_input)
+                break
+            else:
+                print("Invalid input: Please enter a valid last name.\n")
+
 
         print("\033[92m" + "Enter staff email address")
         user_input = input(">> " + "\033[0m\n")
