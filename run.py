@@ -11,6 +11,7 @@ https://docs.google.com/spreadsheets/d/1eRzudCSUTXbOoQNGQWoZAAvzvJGvzIE8t3iOZxcQ
 import gspread
 from google.oauth2.service_account import Credentials
 import os
+import re
 import TableIt #To create the table in the terminal
 import time
 import smtplib # To send email
@@ -158,28 +159,16 @@ def create_new_record():
             break
 
         # Get user input for first name, last name, email
-        """     
-        print("\033[92m" + "Enter staff first name")
-        user_input = input(">> " + "\033[0m\n")
-        new_list.append(user_input)
-
-        print("\033[92m" + "Enter staff last name")
-        user_input = input(">> " + "\033[0m")
-        new_list.append(user_input)
-        """
         while True:
             
             print("\033[92m" + "Enter staff first name")
             user_input = input(">> " + "\033[0m\n")
-            print(user_input. isalpha())
-                
             if (user_input.isalpha()  == True):
                 new_list.append(user_input)
                 break
             else:
                 print("Invalid input: Please enter a valid first name.\n")
         while True:
-            
             print("\033[92m" + "Enter staff last name")
             user_input = input(">> " + "\033[0m\n")
             print(user_input. isalpha())
@@ -190,11 +179,17 @@ def create_new_record():
             else:
                 print("Invalid input: Please enter a valid last name.\n")
 
+        while True:
+            print("\033[92m" + "Enter staff email address")
+            user_input = input(">> " + "\033[0m\n")
+            result = validate_email(user_input)
+            print(result)
 
-        print("\033[92m" + "Enter staff email address")
-        user_input = input(">> " + "\033[0m\n")
-        new_list.append(user_input)
-
+            if (result):
+                new_list.append(user_input)
+                break
+            else:
+                print("Invalid input: Please enter a valid email address.\n")
         # Add annual leave to new list
         new_list.append(annual_leave)
         new_list.append(0)
@@ -208,7 +203,19 @@ def create_new_record():
         print("Press Enter to continue...")
         input("\033[92m" + ">> " + "\033[0m")
         break
-    
+
+def validate_email(user_input):
+
+    """ 
+    A function to check if user has entered a valid email address
+    """
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+
+    if(re.fullmatch(regex, user_input)):
+        return True
+    else:
+        return False
+
 def get_new_staff_number():
 
     """

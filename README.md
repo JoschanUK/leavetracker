@@ -270,3 +270,5 @@ The live link can be found here - https://leavetrackeruk-7e349952c4d1.herokuapp.
 - [W3school](https://www.w3schools.com) - For guiding me how to write the codes.
 
 - Instruction to deploy is taken from [Github]().
+- To validate an [email address](https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/) input by the user.
+- To check if user has input [only characters](https://www.w3schools.com/python/ref_string_isalpha.asp) and not integer.
