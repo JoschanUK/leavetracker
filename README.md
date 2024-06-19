@@ -198,9 +198,11 @@ It consists of the following fields and this tab is updated by user input:
     - System expecting an integer but user entered a string.
     - System expecting a string but user entered an integer.
     - System expecting a date but user entered an integer or a string.
+    - System to check that only characters are entered in both first name and last name.
+    - System to validate that emaill address entered by user is in correct format.
 8. Able to compare the dates in the google sheet against the user input. ie. 
     - To check if user has already taken a leave on that date.
-9. Only allow access when user enters the correct user name and password.
+9. Security feature where system will load when user enters the correct user name and password.
 10. When user entered the job grade, the programme will conver the str entered by user into uppercase.
 
 
