@@ -4,6 +4,10 @@ They system is able to create new record according to job grade, create new annu
 
 ![alt text](images/security.jpg)
 
+# Flow Chart
+
+![alt text](images/flowchart.jpg)
+
 # Features
 
 In this section, we shows the users what to expect and what features are presented in this programme.

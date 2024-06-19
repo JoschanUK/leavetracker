@@ -481,8 +481,8 @@ def display_leave_record():
                     break
             else:
                 print("Invalid input : Please enter correct staff number.\n")    
-            except ValueError:
-                print("Invalid input: Please enter a valid integer.\n")
+        except ValueError:
+            print("Invalid input: Please enter a valid integer.\n")
 
 
 def delete_record():
