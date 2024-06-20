@@ -257,6 +257,40 @@ Code is put thru CI Python Linter and there is no error found.
 
 The site was deployed to GitHub and Heroku pages. The steps to deploy are as follows:
 
+From Gitpod
+- Delete import pprint from run.py
+- Change code in run.py with adding a '\n' behind all the input method
+- Save run.py
+- Ensure the list of requirements are saved in requirements.txt by using command 'pip3  freeze > requirements.txt'
+- Committ and save to Github
+
+From Heroku
+- Sign up for a Heroku account
+- Enter firstname, lastname, email address, role (student), country, language(python)
+- Once the email address is verified. Password is needed to be setup
+- Click on proceed button
+- Accept Heroku term of service
+- Activate the Heroku Student Pack
+- Create new app from Heroku dashboard
+- Enter name of app (leavetrackeruk)
+- Select region (Europe)
+- Click 'Create App'
+- Go to setting tab and under config vars 
+- Enter CREDS in the key field
+- Go over to Github and cope everthing in the creds.json file
+- Paste the information in the value field in Heroku
+- Click Add
+- Enter 'PORT' in the key field and '8000' in the value field
+- Click Add buildpacks
+- Select 'Python' and save changes
+- Select 'node.js' and save changes
+- Ensure that the order from top is 'Python' and then 'nodejs'
+- Go to deploy section
+- Select Github deployment method
+- Click 'Connect to Github'
+- Search repository name (leavetracker) and click 'connect'
+- To deploy, click on 'Deploy Branch'
+- Click 'View' to deploy project.
 
 
 
