@@ -98,7 +98,7 @@ def validate_data_int(sys_values, user_value):
     for value in sys_values:
         if int(user_value) == int(sys_values[x]):
             return True
-        x += 1
+        x +=
     return False
 
 
@@ -294,7 +294,8 @@ def take_leave():
         try:
             print("\033[92m" + "Please enter a start date [DD/MM/YYYY] :")
             user_input_start = input(">> " + "\033[0m\n")
-            user_input_start_dt = datetime.strptime(user_input_start, '%d/%m/%Y')
+            user_input_start_dt = datetime.strptime(
+                user_input_start, '%d/%m/%Y')
             result = validate_startend_date(user_input_start, user_input_staff)
             if not result:
                 final_input_list.append(user_input_start)
@@ -338,9 +339,11 @@ def take_leave():
             """
             if int(user_input) <= 4:
                 if int(user_input) == 1:
-                    update_holidays_record(user_input_staff, selected_record[5], total_leave)
+                    update_holidays_record(
+                        user_input_staff, selected_record[5], total_leave)
                 elif int(user_input) == 2:
-                    update_sickness_record(user_input_staff, selected_record[6], total_leave)
+                    update_sickness_record(
+                        user_input_staff, selected_record[6], total_leave)
                 reasons = reasons[int(user_input)]
                 final_input_list.append(reasons[1])
                 # Append new leave details to spreadsheet
@@ -438,7 +441,8 @@ def display_leave_record():
         Allow user to select which staff is taking leave by
         enter the staff number and checking that it is an int
         """
-        print("\033[92m" + "Please select staff number to display that staff records :")
+        print("\033[92m" + "Please select staff number "
+              "to display that staff records :")
         try:
             user_input_staff = int(input(">> " + "\033[0m\n"))
 
@@ -472,8 +476,8 @@ def display_leave_record():
                     print("Press Enter to continue...")
                     input("\033[92m" + ">> " + "\033[0m\n")
                     break
-            else:              
-                print("Invalid input : Please enter correct staff number.\n")    
+            else:
+                print("Invalid input : Please enter correct staff number.\n")
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
 
@@ -535,7 +539,7 @@ def send_email():
                 selected_record = selected_details[int(user_input_staff)]
                 break
             else:
-                print("Invalid input : Please enter correct staff number.\n")           
+                print("Invalid input : Please enter correct staff number.\n")
         except ValueError:
             print("Invalid input: Please enter a valid integer.\n")
     """
@@ -546,7 +550,10 @@ def send_email():
     subject = "Leave Updated Record"
 
     # Creating email content
-    email_content = ("**This is an auto-generated email**" + "\n\n" "Total leave remaining : " + selected_record[5] + "\n" + "Total sick leave taken : " + selected_record[6] + "\n\n" + "Thank you")
+    email_content = ("**This is an auto-generated email**"
+                     "\n\n" "Total leave remaining : " + selected_record[5] +
+                     "\nTotal sick leave taken : " + selected_record[6] +
+                     "\n\n" + "Thank you")
     print(email_content)
 
     message = email_content
@@ -595,7 +602,8 @@ def main():
     os.system('clear')
     print("\033[1m" + "Welcome to Leave Tracking System \n" + "\033[0m")
     print("\033[1m" + "System Version 1.0\n" + "\033[0m")
-    print("\033[1m" + "**Unauthorised use is strictly prohibited**\n\n" + "\033[0m")
+    print("\033[1m" + "**Unauthorised use is strictly "
+          "prohibited**\n\n" + "\033[0m")
 
     today = date.today()
     today = today.strftime("%d/%m/%Y")
