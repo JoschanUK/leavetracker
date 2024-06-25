@@ -192,6 +192,8 @@ It consists of the following fields and this tab is updated by user input:
 
 # Python Features implemented in this application.
 
+I have developed the following in this application:
+
 1. Change of colour and bolding the text in the main screen.
 2. Retrieving information from a tab in a google sheets.
 3. Update and append new record into a google sheets.
@@ -209,6 +211,10 @@ It consists of the following fields and this tab is updated by user input:
 9. Security feature where system will load when user enters the correct user name and password.
 10. When user entered the job grade, the programme will conver the str entered by user into uppercase.
 
+# Future Features to be implemented
+
+1. To link this to a front end web page so that the display will be more user friendly.
+2. Allow admin to create password and change password.
 
 # Testing
 

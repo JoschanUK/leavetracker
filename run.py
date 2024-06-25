@@ -98,7 +98,7 @@ def validate_data_int(sys_values, user_value):
     for value in sys_values:
         if int(user_value) == int(sys_values[x]):
             return True
-        x +=
+        x += 1
     return False
 
 
