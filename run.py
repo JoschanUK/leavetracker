@@ -370,15 +370,19 @@ def validate_startend_date(user_date, staff_no):
     detail = SHEET.worksheet("records")
     all_leave_list = detail.get_all_values()
     print("Retrieving data from database ...\n")
+    
     for date_row in all_leave_list:
-
+ 
         data_date = date_row
+        
         if (str(data_date[1]) == str(staff_no)):
-            if (str(data_date[5]) <= str(user_date) <= str(data_date[6])):
-                return True
-    else:
-        return False
-
+            user_date_o = datetime.strptime(user_date, '%d/%m/%Y')
+            startdate_o = datetime.strptime(data_date[5], '%d/%m/%Y')
+            enddate_o = datetime.strptime(data_date[6], '%d/%m/%Y')
+            if (startdate_o <= user_date_o <= enddate_o):
+                return True 
+    return False
+    
 
 def update_holidays_record(staff_no, total_annual, total_leave):
     """
@@ -609,7 +613,7 @@ def main():
     today = today.strftime("%d/%m/%Y")
     print(f"Today date is {today}.\n\n")
 
-    security_check()
+    #security_check()
     option_selected = get_user_selection()
     while option_selected != 00:
         if int(option_selected) == 1:

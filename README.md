@@ -1,5 +1,5 @@
 # Introduction
-Leave Tracking System is a application which automate and help the organisation to keep track of the staff annual leave and sick leave.
+Leave Tracking System is an application which automate and help the organisation to keep track of the staff annual leave and sick leave.
 The application system is able to create new record according to job grade, create new annual leave, email the outstanding balance to staff and is able to delete the record when the staff leave the organisation. It is a system that is linked to a google sheets which keeps track of the information. 
 
 ![alt text](images/security.jpg)
@@ -10,7 +10,7 @@ The application system is able to create new record according to job grade, crea
 
 # Features
 
-In this section, we shows the users what to expect and what features are presented in this programme.
+In this section, we show the users what to expect and what features are presented in this programme.
 
 **Navigation options**
 
@@ -39,7 +39,7 @@ Once, the user entered this correctly, there are now a total of 8 options which 
 
 Option <1> is used to create a new staff record. The programme will :
     
-    - The user is aksed to input the job grade [A, B, C, D].
+    - The user is asked to input the job grade [A, B, C, D].
     - Enter First Name, Last Name and email address.
     - The system will based on user input of the job grade and assign the number of leave to the record. 
     - The system will also assign a new staff number.
