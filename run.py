@@ -529,9 +529,8 @@ def send_email():
         total_staff = get_new_staff_number()
 
         """
-        Allow user to select which staff is taking leave
-        by enter the staff number and checking that it is an
-        int
+        Allow user to select which staff is taking leave by
+        enter the staff number and checking that it is an int
         """
         print("\033[92m" + "Please select staff number to email the staff :")
         try:
@@ -551,9 +550,9 @@ def send_email():
     subject = "Leave Updated Record"
 
     # Creating email content
-    email_content = ("**This is an auto-generated email**"
+    email_content = ("**This is an auto-generated email**" +
                      "\n\n" "Total leave remaining : " + selected_record[5] +
-                     "\nTotal sick leave taken : " + selected_record[6] +
+                     "\n" + "Total sick leave taken : " + selected_record[6] +
                      "\n\n" + "Thank you")
     print(email_content)
 
